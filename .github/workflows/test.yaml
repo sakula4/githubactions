@@ -50,8 +50,8 @@ jobs:
         uses: sakula4/ecs-wait-action@v1.0
         with:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}          
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}          
           ecs-cluster: "gwt-acuity-gw360-apie-ecs"
           ecs-services: '["canary-service-dev", "main-service-dev"]'
           retries: 3
