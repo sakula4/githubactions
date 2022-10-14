@@ -1,6 +1,8 @@
 name: ContinuousIntegration
 
 on:
+  push:
+  - "main"
   workflow_dispatch:
 
 env:
