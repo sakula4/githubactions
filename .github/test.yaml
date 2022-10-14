@@ -14,7 +14,6 @@ permissions:
 jobs:
   check-ecs-service:
     name: check-ecs-service
-    needs: [build-push-image,deploy-api]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
