@@ -29,6 +29,11 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: gh-action
 
+      - name: get s3
+        run: |
+          aws s3 ls
+          printenv
+        shell: bash
       # - name: get-ssh-private-key
       #   uses: abhilash1in/aws-secrets-manager-action@v2.1.0
       #   with:
