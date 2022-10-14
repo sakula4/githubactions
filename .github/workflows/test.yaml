@@ -29,17 +29,17 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: gh-action
 
-      - name: get-ssh-private-key
-        uses: abhilash1in/aws-secrets-manager-action@v2.1.0
-        with:
-          secrets: github/workflows/sshprivatekey
-          disable-warnings: true
+      # - name: get-ssh-private-key
+      #   uses: abhilash1in/aws-secrets-manager-action@v2.1.0
+      #   with:
+      #     secrets: github/workflows/sshprivatekey
+      #     disable-warnings: true
 
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ env.GITHUB_WORKFLOWS_SSHPRIVATEKEY }}
-          known_hosts: github.com          
+      # - name: Install SSH Key
+      #   uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ env.GITHUB_WORKFLOWS_SSHPRIVATEKEY }}
+      #     known_hosts: github.com          
 
       - name: check ecs service health
         uses: oryanmoshe/ecs-wait-action@v1.3
