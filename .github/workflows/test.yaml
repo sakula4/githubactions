@@ -5,7 +5,7 @@ on:
 
 env:
   AWS_DEFAULT_REGION: us-east-1
-  AWS_IAM_ASSUME_ROLE: arn:aws:iam::076699035263:role/test-ecs
+  AWS_IAM_ASSUME_ROLE: arn:aws:iam::076699035263:role/test-github-ecs
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
