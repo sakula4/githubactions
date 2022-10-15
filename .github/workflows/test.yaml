@@ -24,13 +24,13 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
 
-      # - name: configure-aws-credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      #     role-to-assume: ${{ env.AWS_IAM_ASSUME_ROLE }}
-      #     role-duration-seconds: 1200
-      #     role-session-name: gh-action
+      - name: configure-aws-credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ env.AWS_IAM_ASSUME_ROLE }}
+          role-duration-seconds: 1200
+          role-session-name: gh-action
 
       # - name: get s3
       #   run: |
