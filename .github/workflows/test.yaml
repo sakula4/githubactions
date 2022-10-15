@@ -35,6 +35,7 @@ jobs:
       - name: get s3
         run: |
           aws sts get-caller-identity
+          echo "AWS_SDK_LOAD_CONFIG=\"true\"" >> GITHUB_ENV
         shell: bash
       # - name: get-ssh-private-key
       #   uses: abhilash1in/aws-secrets-manager-action@v2.1.0
