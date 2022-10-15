@@ -50,7 +50,7 @@ jobs:
       #     known_hosts: github.com          
 
       - name: check ecs service health
-        uses: sakula4/ecs-wait-action@main
+        uses: sakula4/ecs-wait-action@master
         with:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
           aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
