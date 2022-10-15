@@ -10,6 +10,7 @@ env:
   AWS_DEFAULT_REGION: us-east-1
   AWS_IAM_ASSUME_ROLE: arn:aws:iam::076699035263:role/test-github-ecs
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  AWS_SDK_LOAD_CONFIG: true
 
 permissions:
   id-token: write
