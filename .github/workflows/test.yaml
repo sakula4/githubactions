@@ -10,7 +10,6 @@ env:
   AWS_DEFAULT_REGION: us-east-1
   AWS_IAM_ASSUME_ROLE: arn:aws:iam::076699035263:role/test-github-ecs
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  AWS_SDK_LOAD_CONFIG: true
 
 permissions:
   id-token: write
@@ -33,11 +32,11 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: gh-action
 
-      - name: get s3
-        run: |
-          aws sts get-caller-identity
-          echo "AWS_SDK_LOAD_CONFIG=\"true\"" >> GITHUB_ENV
-        shell: bash
+      # - name: get s3
+      #   run: |
+      #     aws sts get-caller-identity
+      #     echo "AWS_SDK_LOAD_CONFIG=\"true\"" >> GITHUB_ENV
+      #   shell: bash
       # - name: get-ssh-private-key
       #   uses: abhilash1in/aws-secrets-manager-action@v2.1.0
       #   with:
@@ -51,11 +50,12 @@ jobs:
       #     known_hosts: github.com          
 
       - name: check ecs service health
-        uses: sakula4/ecs-wait-action@v1.0
+        uses: sakula4/ecs-wait-action@main
         with:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-          # aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          # aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}          
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ env.AWS_SESSION_TOKEN }}
           ecs-cluster: "gwt-acuity-gw360-apie-ecs"
           ecs-services: '["canary-service-dev", "main-service-dev"]'
           retries: 3
