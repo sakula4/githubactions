@@ -14,6 +14,8 @@ jobs:
       run: echo "name=test::hello" >> $GITHUB_OUTPUT
     - id: step2
       run: echo "name=test::world" >> $GITHUB_OUTPUT
+    - name: Test Outputs
+      run: echo ${{ steps.step1.outputs.test }} ${{ steps.step2.outputs.test }}
   job2:
     runs-on: ubuntu-latest
     needs: job1
