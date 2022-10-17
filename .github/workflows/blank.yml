@@ -11,9 +11,9 @@ jobs:
       output2: ${{ steps.step2.outputs.test }}
     steps:
     - id: step1
-      run: echo "name=test::hello" >> $GITHUB_OUTPUT
+      run: echo "test=hello" >> $GITHUB_OUTPUT
     - id: step2
-      run: echo "name=test::world" >> $GITHUB_OUTPUT
+      run: echo "test=world" >> $GITHUB_OUTPUT
     - name: Test Outputs
       run: echo ${{ steps.step1.outputs.test }} ${{ steps.step2.outputs.test }}
   job2:
