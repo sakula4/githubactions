@@ -1,0 +1,49 @@
+name: Canary-Initialize Environment
+
+on: 
+  pull_request:
+    branches:
+      - "development"
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Select environment to run.
+        default: ephem
+        options:
+        - dev
+        - stage
+        - ephem
+        - demo
+        - prod
+      
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  ENV_SHORT: ${{ github.event.inputs.environment }}
+  ENV_LONG: >
+    ${{ fromJson('{ 
+    "dev": "development", 
+    "stage": "staging", 
+    "ephem": "ephermical", 
+    "demo": "demo", 
+    "prod": "production"}')[github.event.inputs.environment] }}
+
+permissions:
+  id-token: write
+  contents: read
+  
+jobs:
+  set-state:
+    name: set backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3 
+    
+      - name: set backend
+        shell: bash
+        run: |
+          echo ${{ env.ENV_SHORT }}
+          echo ${{ env.ENV_LONG }}
