@@ -49,6 +49,5 @@ jobs:
           cat backend.tf
           ENV_LONG=${{ env.ENV_LONG }}
           ENV_SHORT=${{ env.ENV_SHORT }}
-          sed 's/{ENV1}/$ENV_LONG/g' backend.tf
-          sed 's/{ENV2}/$ENV_SHORT/g' backend.tf
+          sed -i "s/{ENV1}/$ENV_LONG/g;s/{ENV2}/$ENV_SHORT/g" backend.tf > backend.tf
           cat backend.tf      
