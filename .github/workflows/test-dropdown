@@ -1,9 +1,6 @@
 name: Canary-Initialize Environment
 
 on: 
-  pull_request:
-    branches:
-      - "development"
   workflow_dispatch:
     inputs:
       environment:
