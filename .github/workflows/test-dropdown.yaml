@@ -18,7 +18,8 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   ENV_SHORT: ${{ github.event.inputs.environment }}
-  ENV_LONG: ${{ fromJson('{ 
+  ENV_LONG: >
+    ${{ fromJson('{ 
     "dev": "development", 
     "stage": "staging", 
     "ephem": "ephermical", 
