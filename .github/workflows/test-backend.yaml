@@ -1,4 +1,4 @@
-name: Canary-Initialize Environment
+name: Test Backend
 
 on: 
   pull_request:
@@ -46,6 +46,7 @@ jobs:
         shell: bash
         run: |
           cd infra/bg-init
+          cat backend.tf
           ENV_LONG = ${{ env.ENV_LONG }}
           ENV_SHORT = ${{ env.ENV_LONG }}
           sed 's/{ENV1}/$ENV_LONG/g' backend.tf
