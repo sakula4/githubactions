@@ -48,9 +48,9 @@ jobs:
           echo ${{ env.ENV_LONG }}
 
       - name: configure-aws-credentials
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-region: us-east-1
-            role-to-assume: arn:aws:iam::350828950339:role/gwt-acuity-gw360-oidc-role
-            role-duration-seconds: 1200
-            role-session-name: gh-action
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::350828950339:role/gwt-acuity-gw360-oidc-role
+          role-duration-seconds: 1200
+          role-session-name: gh-action
