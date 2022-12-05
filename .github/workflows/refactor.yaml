@@ -14,7 +14,8 @@ on:
   workflow_dispatch:
     inputs:
       region:
-        type: Select region
+        type: choice
+        description: Select region
         options:
         - us-east-1
         - us-west-1
