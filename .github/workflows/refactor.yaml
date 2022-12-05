@@ -58,14 +58,14 @@ jobs:
           cd hcl2json
           go build
           # cd ..
-          # mv hcl2json /usr/local/bin/hcl2json
-          # chmod +x /usr/local/bin/hcl2json/hcl2json
+          mv hcl2json /usr/local/bin/hcl2json
+          chmod +x /usr/local/bin/hcl2json
           # pwd
         shell: bash
 
       - name: Generate HCL to Json
         run: |
-          /usr/local/bin/hcl2json/hcl2json infra/dev/dev.hcldev.hcl > dev.json
+          hcl2json infra/dev/dev.hcldev.hcl > dev.json
           cat dev.json
         shell: bash
 
