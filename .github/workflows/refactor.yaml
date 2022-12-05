@@ -50,8 +50,8 @@ jobs:
         run: |
           cd /tmp
           git clone https://github.com/tmccombs/hcl2json
-          # cd hcl2json
-          # go build
+          cd hcl2json
+          go build
           # cd ..
           # mv hcl2json /usr/local/bin/hcl2json
           # chmod +x /usr/local/bin/hcl2json/hcl2json
