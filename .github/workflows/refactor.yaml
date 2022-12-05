@@ -65,7 +65,7 @@ jobs:
 
       - name: Generate HCL to Json
         run: |
-          hcl2json infra/dev/dev.hcldev.hcl > dev.json
+          hcl2json infra/dev/dev.hcl > dev.json
           cat dev.json
         shell: bash
 
