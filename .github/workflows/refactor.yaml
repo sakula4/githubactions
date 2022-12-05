@@ -1,0 +1,149 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test hcl2json
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "develop" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: 'us-east-1'
+      DELETED_RESOURCES: false
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+
+      - name: install tfcmt
+        run: | 
+          curl -Lo /tmp/tfcmt_linux_amd64.tar.gz https://github.com/suzuki-shunsuke/tfcmt/releases/download/v3.2.5/tfcmt_linux_amd64.tar.gz
+        shell: bash
+
+      - name: execute permissions to tfcmt
+        run: |
+          cd /tmp
+          tar -xvzf tfcmt_linux_amd64.tar.gz
+          mv tfcmt /usr/local/bin/tfcmt
+          chmod +x /usr/local/bin/tfcmt
+        shell: bash
+
+      - name: cloning hcl2json repo
+        run: |
+          cd /tmp
+          git clone https://github.com/tmccombs/hcl2json
+          cd hcl2json
+          go build
+          cd ..
+          mv hcl2json /usr/local/bin/hcl2json
+          chmod +x /usr/local/bin/hcl2json/hcl2json
+          pwd
+        shell: bash
+
+      - name: Generate HCL to Json
+        run: |
+          /usr/local/bin/hcl2json/hcl2json infra/dev/dev.hcldev.hcl > dev.json
+          cat dev.json
+        shell: bash
+
+      - name: JSON to variables
+        uses: rgarcia-phi/json-to-variables@v1.1.0
+        with:
+          filename: 'dev.json'
+          prefix: test
+          masked: false
+
+      - name: Show output of Environment Bucket Name
+        run: echo "The time was ${{ env.test_locals_oz_network_isolated_subnets_AZ-0 }}"
+
+
+#      - name: apply changes
+#        id: apply_changes
+#        if: ${{ steps.checking_deleted_resources.outputs.Deleted_resource == 'true' }}
+#        run:
+#          terraform apply -auto-approve
+#        continue-on-error: true
+
+
+#               - name  : Merge development -> staging
+#               uses: devmasx/merge-branch@master
+#               with:
+#                 type: now
+#                 from_branch: develop
+#                 target_branch: main
+#                 github_token: ${{ github.token }}
+
+# if: ${{ cat tfplan_rename_bucket.json | jq -r '((.resource_changes?[]?.change?.actions[] | select(contains("delete")))=="delete" )' }}
+#        shell: bash
+#        run:  |
+#          DELETED_RESOURCES = $(cat tfplan_rename_bucket.json | jq -r '((.resource_changes?[]?.change?.actions[] | select(contains("delete")))=="delete" )')
+#          echo "$DELETED_RESOURCES"
+
+
+
+#run: |
+#  #           STARS=$(jq  '.' terraform_git.json)
+
+#      - name: Terraform display Plan
+#        id: displayplan
+#        run: jq . tfplan.json
+#
+#      - name: Get Resources
+#        id: display_resources
+#        run: jq .resource_changes?[]?.change?.actions tfplan.json
+        
+#         run: terraform plan -destroy -out="terraform_git.plan"
+        
+#       - name: Terraform display Plan
+#         id: displayplan
+#         run: terraform show terraform_git.plan
+        
+
+#       - name: Convert Plan to json
+#         id : generate_plan_to_json
+#         run: |
+#           terraform show -json tfplan | jq > tfplan.json
+#           cat terraform_git.json
+#           ls
+#           pwd
+#           jq --version
+#           jq . terraform_git.json
+        
+#       - name: Display plan json
+#         id : display_plan_json
+#         run: |
+#           cat terraform_git.json | jq .resource_changes?
+        
+#       - name: retrieving actions from plan
+#         id: action_retrievals
+#         shell: bash
+#         if: ${{ steps.display_plan_json.conclusion == 'success' }}
+#         run: | 
+#           STARS=$(jq  '.' terraform_git.json)
+#           echo "$STARS"
+          
+        
+#       - name: Apply changes
+#         id: apply_plan_changes
+#         run: terraform apply -auto-approve
+
+      
+
