@@ -1,10 +1,10 @@
 locals {
   stacks_version = "0.40.0"
 
-  awslogs_bucket = "gwt-acuity-918623739618-us1-awslogs"
+  awslogs_bucket = "gwt-testorg-account-id-us1-awslogs"
 
   aws = {
-    account_id   = "918623739618"
+    account_id   = "account-id"
     canonical_id = "a4270b16ebd38625830b0229ce2b43f045577e85c4d7f39ae0ad2a533fe10889"
     alias        = "dxc-aws-ppa-dxchhs-edwproducts-dev-us"
   }
@@ -12,9 +12,9 @@ locals {
   okta = {
     org_name     = "dev-24236525"
     base_url     = "okta.com"
-    audience     = "ed6f257e-005d-4e82-8f73-4de6afef878f"
-    issuer_uri   = "https://dev-24236525.okta.com/oauth2/aus55rk4344aCuTkM5d7"
-    metadata_uri = "https://dev-24236525.okta.com/oauth2/aus55rk4344aCuTkM5d7/.well-known/oauth-authorization-server"
+    audience     = "test"
+    issuer_uri   = "random"
+    metadata_uri = "another-random"
   }
 
   account_baseline = {
@@ -96,7 +96,7 @@ locals {
     }
     port                    = 5232
     db_name                 = "abc"
-    admin_username          = "pgadmin"
+    admin_username          = "testadmin"
     instance_type           = "db.t3.micro"
     allocated_storage       = 100
     max_allocated_storage   = 150
