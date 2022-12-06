@@ -95,6 +95,7 @@ jobs:
 
       - name: extract layers when enabled key is true
         run: |
+          chmod +x dev.json
           enabledKeys=$(scripts/resolveLayers.py dev.json)
           echo $enabledKeys
         shell: bash
