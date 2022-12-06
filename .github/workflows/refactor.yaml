@@ -38,7 +38,7 @@ jobs:
       AWS_REGION: 'us-east-1'
       DELETED_RESOURCES: false
     outputs:
-      layers: ${{ steps.layers.outputs.enabledKeys }}
+      layers: ${{ steps.layers.outputs.matrix }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -95,8 +95,8 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
-          echo "enabledKeys=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
-          echo $enabledKeys
+          enabledKeys=$(python scripts/resolveLayers.py dev.json)
+          echo matrix={\"test\":$enabledKeys} >> $GITHUB_OUTPUT
         shell: bash
 
       - name: test output
@@ -119,7 +119,7 @@ jobs:
     strategy: 
       max-parallel: 1
       matrix:
-        layers: ${{ needs.terraform.outputs.layers }}
+        layers: ${{ fromJSON(needs.terraform.outputs.layers) }}
     steps:
       - name: test
         run: | 
