@@ -96,7 +96,7 @@ jobs:
         run: |
           chmod +x dev.json scripts/resolveLayers.py
           enabledKeys=$(python scripts/resolveLayers.py dev.json)
-          echo "matrix={\"test\":$enabledKeys}" >> $GITHUB_OUTPUT
+          echo "matrix={\"test\":\"$enabledKeys\"}" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: test output
