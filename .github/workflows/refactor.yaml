@@ -101,7 +101,7 @@ jobs:
 
       - name: test output
         run: |
-          echo ${{ steps.layers.outputs.enabledKeys }}
+          echo ${{ steps.layers.outputs.matrix }}
 
   test-stage:
     name: test
@@ -118,8 +118,7 @@ jobs:
     needs: terraform
     strategy: 
       max-parallel: 1
-      matrix:
-        layers: ${{fromJSON(needs.terraform.outputs.layers)}}
+      matrix: ${{fromJSON(needs.terraform.outputs.layers)}}
     steps:
       - name: test
         run: | 
