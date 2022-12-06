@@ -4,7 +4,7 @@ import sys
 file = sys.argv[1]
 f=open(file)
 enabledKeys = []
-data = json.loads(f)
+data = json.load(f)
 localData = data['locals']
 for x in localData:
     keys = x.keys();
