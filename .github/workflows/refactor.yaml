@@ -97,8 +97,9 @@ jobs:
         run: |
           pwd
           ls -al
+          python -v
           chmod +x dev.json scripts/resolveLayers.py
-          enabledKeys=$(scripts/resolveLayers.py dev.json)
+          enabledKeys=$(python scripts/resolveLayers.py dev.json)
           echo $enabledKeys
         shell: bash
 
