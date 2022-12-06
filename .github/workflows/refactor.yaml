@@ -93,6 +93,12 @@ jobs:
           prefix: test
           masked: false
 
+      - name: extract layers when enabled key is true
+        run: |
+          enabledKeys=scripts/resolveLayers.py dev.json
+          echo $enabledKeys
+        shell: bash
+
       - name: test layer-name
         run: |
           echo ${{ matrix.layers }}
