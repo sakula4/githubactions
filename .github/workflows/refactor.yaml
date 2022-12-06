@@ -22,8 +22,8 @@ on:
       environment:
         type: environment
 
-env:
-  LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
+# env:
+#   LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -35,7 +35,7 @@ jobs:
     strategy: 
       matrix:
         max-parallel: 1 
-        layers: ${{ env.LAYERS }}        
+        layers: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]        
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
