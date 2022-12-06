@@ -118,8 +118,7 @@ jobs:
     needs: terraform
     strategy: 
       max-parallel: 1
-      matrix: 
-        type: ${{ needs.terraform.outputs.layers }}
+      matrix: ${{ needs.terraform.outputs.layers }}
     steps:
       - name: test
         run: | 
