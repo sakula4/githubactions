@@ -119,7 +119,7 @@ jobs:
     strategy: 
       max-parallel: 1
       matrix: 
-        ${{fromJSON(needs.terraform.outputs.layers)}}
+        type: ${{fromJSON(needs.terraform.outputs.layers)}}
     steps:
       - name: test
         run: | 
