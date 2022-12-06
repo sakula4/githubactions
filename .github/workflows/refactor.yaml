@@ -47,12 +47,7 @@ jobs:
         with:
           go-version: '^1.13.1' # The Go version to download (if necessary) and use.
       - run: go version
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_wrapper: false
-
+     
       - name: install tfcmt
         run: | 
           curl -Lo /tmp/tfcmt_linux_amd64.tar.gz https://github.com/suzuki-shunsuke/tfcmt/releases/download/v3.2.5/tfcmt_linux_amd64.tar.gz
@@ -72,10 +67,8 @@ jobs:
           git clone https://github.com/tmccombs/hcl2json
           cd hcl2json
           go build
-          # cd ..
           mv hcl2json /usr/local/bin/hcl2json
           chmod +x /usr/local/bin/hcl2json
-          # pwd
         shell: bash
 
       - name: Generate HCL to Json
@@ -96,21 +89,7 @@ jobs:
         run: |
           chmod +x dev.json scripts/resolveLayers.py
           echo "matrix=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
-          # echo "matrix={\"test\":\"$enabledKeys\"}" >> $GITHUB_OUTPUT
         shell: bash
-
-      - name: test output
-        run: |
-          echo ${{ steps.layers.outputs.matrix }}
-
-  test-stage:
-    name: test
-    runs-on: ubuntu-latest
-    needs: terraform
-    steps:
-      - name: test
-        run: | 
-          echo ${{ needs.terraform.outputs.layers }}  
 
   setup-infra:
     name: Infra setup
