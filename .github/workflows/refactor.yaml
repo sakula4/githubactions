@@ -32,15 +32,14 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
-    # strategy: 
-    #   max-parallel: 1
-    #   matrix:
-    #     layers: ['abc_database', 'abc_network', 'account_baseline', 'alb', 'cluster_policies', 'datadog', 'datalake', 'dbx_integration', 'dbx_queues', 'metastore', 'oz_network', 'public_dns', 'reference_data', 'ssm_documents', 'tableau_server', 'unity_catalog', 'viz_network', 'workspace']
+    id: terraform
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: 'us-east-1'
       DELETED_RESOURCES: false
+    outputs:
+      layers: ${{ steps.layers.outputs.enabledKeys }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -94,14 +93,24 @@ jobs:
           masked: false
 
       - name: extract layers when enabled key is true
+        id: layers
         run: |
-          pwd
-          ls -al
-          python -v
           chmod +x dev.json scripts/resolveLayers.py
-          enabledKeys=$(python scripts/resolveLayers.py dev.json)
-          echo $enabledKeys
+          echo "enabledKeys=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
         shell: bash
+
+  setup-infra:
+    name: Infra setup
+    runs-on: ubuntu-latest
+    strategy: 
+          max-parallel: 1
+          matrix:
+            layers: ${{ needs.terraform.outputs.layers }}
+    steps:
+      - name: test
+        run: | 
+          echo ${{ matrix.layers }}  
+
 
       # - name: test layer-name
       #   run: |
