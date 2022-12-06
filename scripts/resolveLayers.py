@@ -1,9 +1,9 @@
 import json
 import sys
 
-fileName = sys.argv[1]
+file = sys.argv[1]
 enabledKeys = []
-data = json.load(f)
+data = json.load(file)
 localData = data['locals']
 for x in localData:
     keys = x.keys();
