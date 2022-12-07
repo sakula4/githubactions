@@ -90,8 +90,7 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
-          enabled_keys=$(python scripts/resolveLayers.py dev.json ${{ env.stackList }})
-          echo "matrix=$enabled_keys" >> $GITHUB_OUTPUT
+          echo "matrix=$(python scripts/resolveLayers.py dev.json ${{ env.stackList }})" >> $GITHUB_OUTPUT
         shell: bash
 
   setup-infra:
