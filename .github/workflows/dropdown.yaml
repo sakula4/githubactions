@@ -43,7 +43,7 @@ on:
       tableau:
         type: boolean
         description: tableau-server
-                
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -55,3 +55,12 @@ jobs:
         run: | 
           echo "boolean is ${{ github.event.inputs.stack_to_deploy }}" / ${{ inputs.stack_to_deploy }} 
           echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
+          echo "metadata is ${{ github.event.inputs.metadata }}" / ${{ inputs.metadata }}"
+          echo "datadog is ${{ github.event.inputs.datadog }}" / ${{ inputs.datadog }}"
+          echo "baseline is ${{ github.event.inputs.baseline }}" / ${{ inputs.baseline }}"
+          echo "networking is ${{ github.event.inputs.networking }}" / ${{ inputs.networking }}"
+          echo "abc is ${{ github.event.inputs.abc }}" / ${{ inputs.abc }}"
+          echo "datalake is ${{ github.event.inputs.datalake }}" / ${{ inputs.datalake }}"
+          echo "gw360 is ${{ github.event.inputs.gw360 }}" / ${{ inputs.gw360 }}"
+          echo "tableau is ${{ github.event.inputs.tableau }}" / ${{ inputs.tableau }}"
+
