@@ -3,9 +3,15 @@ name: CI
 on:
   workflow_dispatch:
     inputs:
-      boolean:
+      stack_to_deploy:
         type: boolean
         description: True or False
+      Networking:
+        type: boolean
+        description: True or False
+      ABC-Stack:
+        type: boolean
+        description: True or False                
       choice:
         type: choice
         description: Make a choice
@@ -22,5 +28,5 @@ jobs:
 
       - name: greet
         run: | 
-          echo "boolean is ${{ github.event.inputs.boolean }}" / ${{ inputs.boolean }} 
+          echo "boolean is ${{ github.event.inputs.stack_to_deploy }}" / ${{ inputs.stack_to_deploy }} 
           echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
