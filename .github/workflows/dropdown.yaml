@@ -19,6 +19,31 @@ on:
         - foo
         - bar
         - baz
+      metadata:
+        type: boolean
+        description: MetaStore
+      datadog:
+        type: boolean
+        description: Datadog
+      baseline:
+        type: boolean
+        description: Baseline
+      networking:
+        type: boolean
+        description: Networking
+      abc:
+        type: boolean
+        description: abc-stack
+      datalake:
+        type: boolean
+        description: Datalake
+      gw360:
+        type: boolean
+        description: GW360
+      tableau:
+        type: boolean
+        description: tableau-server
+                
 jobs:
   build:
     runs-on: ubuntu-latest
