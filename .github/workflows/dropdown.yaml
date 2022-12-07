@@ -5,13 +5,13 @@ on:
     inputs:
       stack_to_deploy:
         type: boolean
-        description: True or False
+        description: Stack_to_deploy
       Networking:
         type: boolean
-        description: True or False
+        description: Networking
       ABC-Stack:
         type: boolean
-        description: True or False                
+        description: ABC-Stack
       choice:
         type: choice
         description: Make a choice
