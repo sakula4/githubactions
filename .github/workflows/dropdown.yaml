@@ -3,15 +3,6 @@ name: CI
 on:
   workflow_dispatch:
     inputs:
-      stack_to_deploy:
-        type: boolean
-        description: Stack_to_deploy
-      Networking:
-        type: boolean
-        description: Networking
-      ABC-Stack:
-        type: boolean
-        description: ABC-Stack
       choice:
         type: choice
         description: Make a choice
