@@ -25,6 +25,8 @@ on:
 # env:
 #   LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
 
+env:
+  stackList: ['abc-database','abc-network','account-baseline']
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -88,7 +90,8 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
-          echo "matrix=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
+          enabled_keys=$(python scripts/resolveLayers.py dev.json ${{ env.stackList }})
+          echo "matrix=$enabled_keys" >> $GITHUB_OUTPUT
         shell: bash
 
   setup-infra:
