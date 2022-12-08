@@ -1,8 +1,9 @@
 import json
 import sys
+import ast
 
 file = sys.argv[1]
-stackList = sys.argv[2]
+stackList = ast.literal_eval(sys.argv[2])
 f=open(file)
 enabledKeys = []
 data = json.load(f)
@@ -17,7 +18,8 @@ for x in localData:
                 if (internalKey == 'enabled' and internalData.get('enabled')) :
                     enabledKeys.append(key);
 
-# print(enabledKeys)
-new_list = list(set(stackList).intersection(enabledKeys))
+# print(type(enabledKeys))
+# print(stackList)
+enabledStackLayers = list(set(stackList).intersection(enabledKeys))
 
-print(new_list)
+print(enabledStackLayers)
