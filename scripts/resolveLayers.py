@@ -3,10 +3,11 @@ import sys
 import ast
 
 file = sys.argv[1]
-stackList = eval(sys.argv[2])
+stackList = sys.argv[2]
 f=open(file)
 enabledKeys = []
 data = json.load(f)
+stackList2 = ast.literal_eval(stackList)
 localData = data['locals']
 for x in localData:
     keys = x.keys();
@@ -19,7 +20,7 @@ for x in localData:
                     enabledKeys.append(key);
 
 # print(type(enabledKeys))
-# print(stackList)
-enabledStackLayers = list(set(stackList).intersection(enabledKeys))
+print(type(stackList2))
+enabledStackLayers = list(set(stackList2).intersection(enabledKeys))
 
 print(enabledStackLayers)
