@@ -1,28 +1,26 @@
-import json
+import json;
 import sys
-import ast
+import os;
+import ast;
 
-file = sys.argv[1]
-stackList = sys.argv[2]
-print(stackList)
-print(type(stackList))
-f=open(file)
+stackList = os.getenv('stackList');
+stackList = ast.literal_eval(stackList)
+
+fileName = sys.argv[1];
+
+f= open(fileName);
 enabledKeys = []
 data = json.load(f)
-stackList2 = ast.literal_eval(stackList)
-localData = data['locals']
-for x in localData:
-    keys = x.keys();
-    for key in keys:
-        internalData = localData[0][key];
-        if type(internalData) is dict:
-            internalKeys = internalData.keys()
-            for internalKey in internalKeys:
-                if (internalKey == 'enabled' and internalData.get('enabled')) :
-                    enabledKeys.append(key);
 
-# print(type(enabledKeys))
-print(type(stackList2))
-enabledStackLayers = list(set(stackList2).intersection(enabledKeys))
+localData = data.get('locals');
+for key in localData.keys():
+    internalData = localData.get(key);
+    if type(internalData) is dict:
+        internalKeys = internalData.keys()
+        for internalKey in internalKeys:
+            if (internalKey == 'enabled' and internalData.get('enabled')) :
+                enabledKeys.append(key);
+
+enabledStackLayers = list(set(stackList).intersection(enabledKeys))
 
 print(enabledStackLayers)
