@@ -3,7 +3,7 @@ import sys
 import ast
 
 file = sys.argv[1]
-stackList = ast.literal_eval(sys.argv[2])
+stackList = ast.literal_eval(str(sys.argv[2]))
 f=open(file)
 enabledKeys = []
 data = json.load(f)
