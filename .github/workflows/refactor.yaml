@@ -90,7 +90,8 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
-          python scripts/resolveLayers.py dev.json ${{ env.stackList }}
+          echo ${{ env.stackList }}
+          python scripts/resolveLayers.py dev.json "['abc_database','abc_network','account_baseline']"
           echo "matrix=$(python scripts/resolveLayers.py dev.json ${{ env.stackList }})" >> $GITHUB_OUTPUT
         shell: bash
 
