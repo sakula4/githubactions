@@ -4,6 +4,8 @@ import ast
 
 file = sys.argv[1]
 stackList = sys.argv[2]
+print(stackList)
+print(type(stackList))
 f=open(file)
 enabledKeys = []
 data = json.load(f)
