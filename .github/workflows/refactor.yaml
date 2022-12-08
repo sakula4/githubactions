@@ -26,7 +26,7 @@ on:
 #   LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
 
 env:
-  stackList: "['abc-database','abc-network','account-baseline']"
+  stackList: "['abc_database','abc_network','account_baseline']"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

@@ -18,8 +18,8 @@ for x in localData:
                 if (internalKey == 'enabled' and internalData.get('enabled')) :
                     enabledKeys.append(key);
 
-# print(type(enabledKeys))
-# print(stackList)
+print(type(enabledKeys))
+print(stackList)
 enabledStackLayers = list(set(stackList).intersection(enabledKeys))
 
 print(enabledStackLayers)
