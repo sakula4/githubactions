@@ -103,7 +103,8 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
-          python scripts/resolveLayers.py dev.json
+          matrix=$(python scripts/resolveLayers.py dev.json)
+          echo $matrix
           echo "metadata_layers=metadata" >> $GITHUB_OUTPUT
           echo "datadog_layers=datadog" >> $GITHUB_OUTPUT
           echo "baseline_layers=baseline" >> $GITHUB_OUTPUT
