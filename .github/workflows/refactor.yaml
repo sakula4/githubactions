@@ -104,6 +104,13 @@ jobs:
           chmod +x dev.json scripts/resolveLayers.py
           matrix=$(python scripts/resolveLayers.py dev.json)
           echo "matrix=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
+          echo "metadata_layers=metadata" >> $GITHUB_OUTPUT
+          echo "datadog_layers=datadog" >> $GITHUB_OUTPUT
+          echo "baseline_layers=baseline" >> $GITHUB_OUTPUT
+          echo "networking_layers=networking" >> $GITHUB_OUTPUT
+          echo "tableau_layers=tableau" >> $GITHUB_OUTPUT
+          echo "abc_layers=abc" >> $GITHUB_OUTPUT
+          echo "datalake_layers=datalake" >> $GITHUB_OUTPUT
         shell: bash
 
   setup-infra:
