@@ -105,13 +105,9 @@ jobs:
           chmod +x dev.json scripts/resolveLayers.py
           python -u scripts/resolveLayers.py dev.json > test.txt
           cat test.txt
-          echo "metadata_layers=metadata" >> $GITHUB_OUTPUT
-          echo "datadog_layers=datadog" >> $GITHUB_OUTPUT
-          echo "baseline_layers=baseline" >> $GITHUB_OUTPUT
-          echo "networking_layers=networking" >> $GITHUB_OUTPUT
-          echo "tableau_layers=tableau" >> $GITHUB_OUTPUT
-          echo "abc_layers=abc" >> $GITHUB_OUTPUT
-          echo "datalake_layers=datalake" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
+          cat test.txt >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
         shell: bash
 
 #   setup-infra:
