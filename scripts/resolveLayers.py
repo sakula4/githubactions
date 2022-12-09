@@ -4,6 +4,13 @@ import os;
 import ast;
 
 
+print(os.getenv('metadata_stack'))
+print(os.getenv('datadog_stack'))
+print(os.getenv('baseline_stack'))
+print(os.getenv('networking_stack'))
+print(os.getenv('tableau_stack'))
+print(os.getenv('datalake_stack'))
+
 metadata_stack = ast.literal_eval(os.getenv('metadata_stack'))
 datadog_stack = ast.literal_eval(os.getenv('datadog_stack'))
 baseline_stack = ast.literal_eval(os.getenv('baseline_stack'))
@@ -11,6 +18,16 @@ networking_stack = ast.literal_eval(os.getenv('networking_stack'))
 tableau_stack = ast.literal_eval(os.getenv('tableau_stack'))
 abc_stack = ast.literal_eval(os.getenv('abc_stack'))
 datalake_stack = ast.literal_eval(os.getenv('datalake_stack'))
+
+print(metadata_stack)
+print(datadog_stack)
+print(baseline_stack)
+print(networking_stack)
+print(tableau_stack)
+print(abc_stack)
+print(datalake_stack)
+
+
 
 fileName = sys.argv[1];
 
