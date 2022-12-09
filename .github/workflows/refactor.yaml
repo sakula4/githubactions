@@ -26,13 +26,13 @@ on:
 #   LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
 
 env:
-  metadata_stack: '['dbx_integration\',\'reference_data\',\'metastore\']'
-  datalake_stack: '[\'datalake\',\'tenant_network\',\'workspace\',\'cluster_policies\',\'unity_catalog\']'
-  update_stack: '[\'update\',\'test\']'
-  baseline_stack: '[\'account_baseline\',\'ssm_documents\']'
-  networking_stack: '[\'vz_network\',\'public_dns\',\'alb\']'
-  tableau_stack: '[\'tableau_server\']'
-  abc_stack: '[\'abc_network\',\'abc_database\',\'dbx_queues\']'
+  metadata_stack: "['dbx_integration','reference_data','metastore']"
+  datalake_stack: "['datalake','tenant_network','workspace','cluster_policies','unity_catalog']"
+  datadog_stack: "['datadog','test']"
+  baseline_stack: "['account_baseline','ssm_documents']"
+  networking_stack: "['vz_network','public_dns','alb']"
+  tableau_stack: "['tableau_server']"
+  abc_stack: "['abc_network','abc_database','dbx_queues']"
   
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
