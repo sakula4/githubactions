@@ -26,7 +26,7 @@ on:
 #   LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
 
 env:
-  metadata_stack: "['dbx_integration','reference_data', 'metastore']"
+  metadata_stack: "['dbx_integration','reference_data','metastore']"
   datadog_stack: "['datadog','test']"
   baseline_stack: "['account_baseline','ssm_documents']"
   networking_stack: "['vz_network','public_dns','alb']"
