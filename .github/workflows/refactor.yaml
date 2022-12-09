@@ -111,7 +111,7 @@ jobs:
         shell: bash
 
   setup-infra-metadata:
-    name: metadata for ${{ inputs.environment }}
+    name: metadata for ${{ inputs.environment }} (${{ matrix.layers }})
     runs-on: ubuntu-latest
     needs: terraform
     strategy: 
