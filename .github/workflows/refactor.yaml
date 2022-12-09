@@ -32,7 +32,7 @@ env:
   networking_stack: "['vz_network','public_dns','alb']"
   tableau_stack: "['tableau_server']"
   abc_stack: "['abc_network','abc_database','dbx_queues']"
-  datadog_stack: "['datadog','test']"
+  datadog_stack: "['datadog']"
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
