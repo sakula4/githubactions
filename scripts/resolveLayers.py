@@ -4,12 +4,6 @@ import os;
 import ast;
 
 
-print(os.getenv('metadata_stack'))
-print(os.getenv('datadog_stack'))
-print(os.getenv('baseline_stack'))
-print(os.getenv('networking_stack'))
-print(os.getenv('tableau_stack'))
-print(os.getenv('datalake_stack'))
 
 metadata_stack = ast.literal_eval(os.getenv('metadata_stack'))
 datadog_stack = ast.literal_eval(os.getenv('datadog_stack'))
@@ -19,13 +13,7 @@ tableau_stack = ast.literal_eval(os.getenv('tableau_stack'))
 abc_stack = ast.literal_eval(os.getenv('abc_stack'))
 datalake_stack = ast.literal_eval(os.getenv('datalake_stack'))
 
-print(metadata_stack)
-print(datadog_stack)
-print(baseline_stack)
-print(networking_stack)
-print(tableau_stack)
-print(abc_stack)
-print(datalake_stack)
+
 
 
 
@@ -55,10 +43,10 @@ abc_layers = list(set(abc_stack).intersection(enabledKeys))
 datalake_layers = list(set(datalake_stack).intersection(enabledKeys))
 
 
-print("metadata_layers="+metadata_layers)
-print("datadog_layers="+datadog_layers)
-print("baseline_layers="+baseline_layers)
-print("networking_layers="+networking_layers)
-print("tableau_layers="+tableau_layers)
-print("abc_layers="+abc_layers)
-print("datalake_layers=" +datalake_layers)
+print("metadata_layers=",metadata_layers)
+print("datadog_layers=",datadog_layers)
+print("baseline_layers=",baseline_layers)
+print("networking_layers=",networking_layers)
+print("tableau_layers=",tableau_layers)
+print("abc_layers=",abc_layers)
+print("datalake_layers=",datalake_layers)
