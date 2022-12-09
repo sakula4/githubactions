@@ -28,12 +28,12 @@ on:
 env:
   metadata_stack: "['dbx_integration','reference_data','metastore']"
   datalake_stack: "['datalake','tenant_network','workspace','cluster_policies','unity_catalog']"
-  datadog_stack: "['datadog','test']"
   baseline_stack: "['account_baseline','ssm_documents']"
   networking_stack: "['vz_network','public_dns','alb']"
   tableau_stack: "['tableau_server']"
   abc_stack: "['abc_network','abc_database','dbx_queues']"
-  
+  datadog_stack: "['datadog','test']"
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
