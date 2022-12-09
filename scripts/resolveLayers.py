@@ -4,9 +4,7 @@ import os;
 import ast;
 
 
-metadata_stack = os.getenv('metadata_stack')
-
-metadata_stack = ast.literal_eval(metadata_stack)
+metadata_stack = ast.literal_eval(os.getenv('metadata_stack'))
 datadog_stack = ast.literal_eval(os.getenv('datadog_stack'))
 baseline_stack = ast.literal_eval(os.getenv('baseline_stack'))
 networking_stack = ast.literal_eval(os.getenv('networking_stack'))
