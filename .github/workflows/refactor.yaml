@@ -110,18 +110,18 @@ jobs:
           echo $GITHUB_OUTPUT
         shell: bash
 
-#   setup-infra:
-#     name: Infra setup
-#     runs-on: ubuntu-latest
-#     needs: terraform
-#     strategy: 
-#       max-parallel: 1
-#       matrix: 
-#         layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
-#     steps:
-#       - name: test
-#         run: | 
-#           echo ${{ matrix.layers }}  
+  setup-infra:
+    name: Infra setup
+    runs-on: ubuntu-latest
+    needs: terraform
+    strategy: 
+      max-parallel: 1
+      matrix: 
+        layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
+    steps:
+      - name: test
+        run: | 
+          echo ${{ matrix.layers }}  
 
 
       # - name: test layer-name
