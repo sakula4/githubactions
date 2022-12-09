@@ -3,7 +3,10 @@ import sys;
 import os;
 import ast;
 
-metadata_stack = ast.literal_eval(os.getenv('metadata_stack'))
+
+metadata_stack = os.getenv('metadata_stack')
+
+metadata_stack = ast.literal_eval(metadata_stack)
 datadog_stack = ast.literal_eval(os.getenv('datadog_stack'))
 baseline_stack = ast.literal_eval(os.getenv('baseline_stack'))
 networking_stack = ast.literal_eval(os.getenv('networking_stack'))
@@ -35,8 +38,6 @@ networking_layers = list(set(networking_stack).intersection(enabledKeys))
 tableau_layers = list(set(tableau_stack).intersection(enabledKeys))
 abc_layers = list(set(abc_stack).intersection(enabledKeys))
 datalake_layers = list(set(datalake_stack).intersection(enabledKeys))
-
-
 
 
 print(metadata_layers)
