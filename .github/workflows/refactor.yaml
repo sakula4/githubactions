@@ -102,7 +102,7 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
-          matrix=$(python scripts/resolveLayers.py dev.json
+          matrix=$(python scripts/resolveLayers.py dev.json)
           echo "matrix=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
         shell: bash
 
