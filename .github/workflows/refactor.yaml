@@ -103,7 +103,8 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
-          matrix=$(python scripts/resolveLayers.py dev.json)
+          python scripts/resolveLayers.py dev.json
+          echo "matrix=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
           echo "metadata_layers=metadata" >> $GITHUB_OUTPUT
           echo "datadog_layers=datadog" >> $GITHUB_OUTPUT
           echo "baseline_layers=baseline" >> $GITHUB_OUTPUT
@@ -113,18 +114,18 @@ jobs:
           echo "datalake_layers=datalake" >> $GITHUB_OUTPUT
         shell: bash
 
-  setup-infra:
-    name: Infra setup
-    runs-on: ubuntu-latest
-    needs: terraform
-    strategy: 
-      max-parallel: 1
-      matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
-    steps:
-      - name: test
-        run: | 
-          echo ${{ matrix.layers }}  
+#   setup-infra:
+#     name: Infra setup
+#     runs-on: ubuntu-latest
+#     needs: terraform
+#     strategy: 
+#       max-parallel: 1
+#       matrix: 
+#         layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
+#     steps:
+#       - name: test
+#         run: | 
+#           echo ${{ matrix.layers }}  
 
 
       # - name: test layer-name
