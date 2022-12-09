@@ -123,85 +123,85 @@ jobs:
         run: | 
           echo ${{ matrix.layers }}
 
-setup-infra-datadog:
-    name: Infra setup
-    runs-on: ubuntu-latest
-    needs: terraform
-    strategy: 
-      max-parallel: 1
-      matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.datadog_layers) }}
-    steps:
-      - name: test
-        run: | 
-          echo ${{ matrix.layers }}
+  setup-infra-datadog:
+      name: Infra setup
+      runs-on: ubuntu-latest
+      needs: terraform
+      strategy: 
+        max-parallel: 1
+        matrix: 
+          layers: ${{ fromJson(needs.terraform.outputs.datadog_layers) }}
+      steps:
+        - name: test
+          run: | 
+            echo ${{ matrix.layers }}
 
-setup-infra-baseline:
-    name: Infra setup
-    runs-on: ubuntu-latest
-    needs: terraform
-    strategy: 
-      max-parallel: 1
-      matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.baseline_layers) }}
-    steps:
-      - name: test
-        run: | 
-          echo ${{ matrix.layers }}
+  setup-infra-baseline:
+      name: Infra setup
+      runs-on: ubuntu-latest
+      needs: terraform
+      strategy: 
+        max-parallel: 1
+        matrix: 
+          layers: ${{ fromJson(needs.terraform.outputs.baseline_layers) }}
+      steps:
+        - name: test
+          run: | 
+            echo ${{ matrix.layers }}
 
-setup-infra-networking:
-    name: Infra setup
-    runs-on: ubuntu-latest
-    needs: terraform
-    strategy: 
-      max-parallel: 1
-      matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.networking_layers) }}
-    steps:
-      - name: test
-        run: | 
-          echo ${{ matrix.layers }}
-
-
-setup-infra-abc:
-    name: Infra setup
-    runs-on: ubuntu-latest
-    needs: terraform
-    strategy: 
-      max-parallel: 1
-      matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.abc_layers) }}
-    steps:
-      - name: test
-        run: | 
-          echo ${{ matrix.layers }}                              
+  setup-infra-networking:
+      name: Infra setup
+      runs-on: ubuntu-latest
+      needs: terraform
+      strategy: 
+        max-parallel: 1
+        matrix: 
+          layers: ${{ fromJson(needs.terraform.outputs.networking_layers) }}
+      steps:
+        - name: test
+          run: | 
+            echo ${{ matrix.layers }}
 
 
-setup-infra-tableau_server:
-    name: Infra setup
-    runs-on: ubuntu-latest
-    needs: terraform
-    strategy: 
-      max-parallel: 1
-      matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.tableau_layers) }}
-    steps:
-      - name: test
-        run: | 
-          echo ${{ matrix.layers }}         
+  setup-infra-abc:
+      name: Infra setup
+      runs-on: ubuntu-latest
+      needs: terraform
+      strategy: 
+        max-parallel: 1
+        matrix: 
+          layers: ${{ fromJson(needs.terraform.outputs.abc_layers) }}
+      steps:
+        - name: test
+          run: | 
+            echo ${{ matrix.layers }}                              
 
-setup-infra-Datalake:
-    name: Infra setup
-    runs-on: ubuntu-latest
-    needs: terraform
-    strategy: 
-      max-parallel: 1
-      matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.datalake_layers) }}
-    steps:
-      - name: test
-        run: | 
-          echo ${{ matrix.layers }}    
+
+  setup-infra-tableau_server:
+      name: Infra setup
+      runs-on: ubuntu-latest
+      needs: terraform
+      strategy: 
+        max-parallel: 1
+        matrix: 
+          layers: ${{ fromJson(needs.terraform.outputs.tableau_layers) }}
+      steps:
+        - name: test
+          run: | 
+            echo ${{ matrix.layers }}         
+
+  setup-infra-Datalake:
+      name: Infra setup
+      runs-on: ubuntu-latest
+      needs: terraform
+      strategy: 
+        max-parallel: 1
+        matrix: 
+          layers: ${{ fromJson(needs.terraform.outputs.datalake_layers) }}
+      steps:
+        - name: test
+          run: | 
+            echo ${{ matrix.layers }}    
 
       # - name: test layer-name
       #   run: |
