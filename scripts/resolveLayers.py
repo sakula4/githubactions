@@ -3,8 +3,13 @@ import sys
 import os;
 import ast;
 
-stackList = os.getenv('stackList');
-stackList = ast.literal_eval(stackList)
+metadata_stack = ast.literal_eval(os.getenv('metadata_stack'))
+datadog_stack = ast.literal_eval(os.getenv('datadog_stack'))
+baseline_stack = ast.literal_eval(os.getenv('baseline_stack'))
+networking_stack = ast.literal_eval(os.getenv('networking_stack'))
+tableau_stack = ast.literal_eval(os.getenv('tableau_stack'))
+abc_stack = ast.literal_eval(os.getenv('abc_stack'))
+datalake_stack = ast.literal_eval(os.getenv('datalake_stack'))
 
 fileName = sys.argv[1];
 
@@ -23,6 +28,21 @@ for x in localData:
                 if (internalKey == 'enabled' and internalData.get('enabled')) :
                     enabledKeys.append(key);
 
-enabledStackLayers = list(set(stackList).intersection(enabledKeys))
+metadata_layers = list(set(metadata_stack).intersection(enabledKeys))
+datadog_layers = list(set(datadog_stack).intersection(enabledKeys))
+baseline_layers = list(set(baseline_stack).intersection(enabledKeys))
+networking_layers = list(set(networking_stack).intersection(enabledKeys))
+tableau_layers = list(set(tableau_stack).intersection(enabledKeys))
+abc_layers = list(set(abc_stack).intersection(enabledKeys))
+datalake_layers = list(set(datalake_stack).intersection(enabledKeys))
 
-print(enabledStackLayers)
+
+
+
+print(metadata_layers)
+print(datadog_layers)
+print(baseline_layers)
+print(networking_layers)
+print(tableau_layers)
+print(abc_layers)
+print(datalake_layers)

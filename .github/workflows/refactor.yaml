@@ -26,7 +26,13 @@ on:
 #   LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
 
 env:
-  stackList: "[\'abc_database\',\'abc_network\',\'account_baseline\']"
+  metadata_stack: "[dbx_integration,reference_data, metastore]"
+  datadog_stack: "[datadog]"
+  baseline_stack: "[account_baseline,ssm_documents]"
+  networking_stack: "[vz_network,public_dns,alb]"
+  tableau_stack: "[tableau_server]"
+  abc_stack: "[abc_network,abc_database,dbx_queues]"
+  datalake_stack: "[datalake,tenant_network,workspace,cluster_policies,unity_catalog]"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -40,7 +46,13 @@ jobs:
       AWS_REGION: 'us-east-1'
       DELETED_RESOURCES: false
     outputs:
-      layers: ${{ steps.layers.outputs.matrix }}
+      metadata_layers: ${{ steps.layers.outputs.metadata_layers }}
+      datadog_layers: ${{ steps.layers.outputs.datadog_layers }}
+      baseline_layers: ${{ steps.layers.outputs.baseline_layers }}
+      networking_layers: ${{ steps.layers.outputs.networking_layers }}
+      tableau_layers: ${{ steps.layers.outputs.tableau_layers }}
+      abc_layers: ${{ steps.layers.outputs.abc_layers }}
+      datalake_layers: ${{ steps.layers.outputs.datalake_layers }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -90,6 +102,7 @@ jobs:
         id: layers
         run: |
           chmod +x dev.json scripts/resolveLayers.py
+          matrix=$(python scripts/resolveLayers.py dev.json
           echo "matrix=$(python scripts/resolveLayers.py dev.json)" >> $GITHUB_OUTPUT
         shell: bash
 
@@ -100,7 +113,7 @@ jobs:
     strategy: 
       max-parallel: 1
       matrix: 
-        layers: ${{ fromJson(needs.terraform.outputs.layers) }}
+        layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
     steps:
       - name: test
         run: | 
