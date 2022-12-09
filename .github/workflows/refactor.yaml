@@ -111,7 +111,7 @@ jobs:
         shell: bash
 
   setup-infra-metadata:
-    name: Infra setup metadata for ${{ inputs.environment }}
+    name: metadata for ${{ inputs.environment }}
     runs-on: ubuntu-latest
     needs: terraform
     strategy: 
@@ -124,7 +124,7 @@ jobs:
           echo ${{ matrix.layers }}
 
   setup-infra-datadog:
-      name: Infra setup datadog for ${{ inputs.environment }}
+      name: datadog for ${{ inputs.environment }}
       runs-on: ubuntu-latest
       needs: terraform
       strategy: 
@@ -137,7 +137,7 @@ jobs:
             echo ${{ matrix.layers }}
 
   setup-infra-baseline:
-      name: Infra setup baseline for ${{ inputs.environment }}
+      name: baseline for ${{ inputs.environment }}
       runs-on: ubuntu-latest
       needs: terraform
       strategy: 
@@ -150,7 +150,7 @@ jobs:
             echo ${{ matrix.layers }}
 
   setup-infra-networking:
-      name: Infra setup neworking for ${{ inputs.environment }}
+      name: neworking for ${{ inputs.environment }}
       runs-on: ubuntu-latest
       needs: terraform
       strategy: 
@@ -164,7 +164,7 @@ jobs:
 
 
   setup-infra-abc:
-      name: Infra setup abc for ${{ inputs.environment }}
+      name: abc for ${{ inputs.environment }}
       runs-on: ubuntu-latest
       needs: terraform
       strategy: 
@@ -178,7 +178,7 @@ jobs:
 
 
   setup-infra-tableau_server:
-      name: Infra setup tableau server for ${{ inputs.environment }}
+      name: tableau server for ${{ inputs.environment }}
       runs-on: ubuntu-latest
       needs: terraform
       strategy: 
@@ -191,7 +191,7 @@ jobs:
             echo ${{ matrix.layers }}         
 
   setup-infra-Datalake:
-      name: Infra setup datalake for ${{ inputs.environment }}
+      name: datalake for ${{ inputs.environment }}
       runs-on: ubuntu-latest
       needs: terraform
       strategy: 
