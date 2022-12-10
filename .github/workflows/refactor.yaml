@@ -123,16 +123,21 @@ jobs:
           prefix: test
           masked: false
 
-      - name: extract layers when enabled key is true
-        id: layers
-        run: |
-          chmod +x dev.json scripts/resolveLayers.py
-          python -u scripts/resolveLayers.py dev.json > test.txt
-          cat test.txt
-          echo $GITHUB_OUTPUT
-          cat test.txt >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
-        shell: bash
+      # - name: extract layers when enabled key is true
+      #   id: layers
+      #   run: |
+      #     chmod +x dev.json scripts/resolveLayers.py
+      #     python -u scripts/resolveLayers.py dev.json > test.txt
+      #     cat test.txt
+      #     echo $GITHUB_OUTPUT
+      #     cat test.txt >> $GITHUB_OUTPUT
+      #     echo $GITHUB_OUTPUT
+      #   shell: bash
+
+      - name: extract layers
+        uses: sakula4/test-repo/actions/pyton-test
+        with:
+          file: 'dev.json'
 
   setup-infra-datadog:
       name: datadog for ${{ inputs.environment }}(${{ matrix.layers }})
