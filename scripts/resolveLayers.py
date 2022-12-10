@@ -13,10 +13,6 @@ tableau_stack = ast.literal_eval(os.getenv('tableau_stack'))
 abc_stack = ast.literal_eval(os.getenv('abc_stack'))
 datalake_stack = ast.literal_eval(os.getenv('datalake_stack'))
 
-
-
-
-
 fileName = sys.argv[1];
 
 f= open(fileName);
