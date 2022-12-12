@@ -182,7 +182,7 @@ jobs:
         layers: ${{ fromJson(needs.terraform.outputs.networking_layers) }}
     steps:
       - name: Test networking infra
-        uses: .github/actions/run-terragrunt
+        uses: ./.github/actions/run-terragrunt
         with: 
           working_dir: ${{ fromJson(needs.terraform.outputs.filemap_path)[matrix.layers] }}
           deploy: false            
