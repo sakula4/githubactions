@@ -135,6 +135,7 @@ jobs:
       #   shell: bash
 
       - name: extract layers
+        id: layers
         uses: sakula4/test-repo/actions/pyton-test
         with:
           file: 'dev.json'
