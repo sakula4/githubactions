@@ -58,7 +58,6 @@ env:
   abc_stack: "['abc_network','abc_database','dbx_queues']"
   datadog_stack: "['datadog']"
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
@@ -78,6 +77,7 @@ jobs:
       tableau_layers: ${{ steps.layers.outputs.tableau_layers }}
       abc_layers: ${{ steps.layers.outputs.abc_layers }}
       datalake_layers: ${{ steps.layers.outputs.datalake_layers }}
+      filemap_path: ${{ steps.layers.outputs.filepath_map }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -123,6 +123,7 @@ jobs:
           prefix: test
           masked: false
 
+
       # - name: extract layers when enabled key is true
       #   id: layers
       #   run: |
@@ -155,8 +156,8 @@ jobs:
       - name: test
         run: | 
           echo ${{ matrix.layers }}
-          cat dev.json | jq ".locals[0].${{ matrix.layers }}.path"
-
+          echo ${{ needs.terraform.outputs.filemap_path }}
+          echo ${{ fromJson(needs.terraform.outputs.filemap_path)[${{ matrix.layers }}] }}
   setup-infra-baseline:
     name: baseline for ${{ inputs.environment }}(${{ matrix.layers }})
     runs-on: ubuntu-latest
