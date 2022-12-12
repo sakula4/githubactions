@@ -183,7 +183,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-            
+
+      - name: install terragrunt
+        uses: autero1/action-terragrunt@v1.1.0
+        with:
+          terragrunt_version: 0.37.4
+
       - name: Test networking infra
         uses: ./.github/actions/run-terragrunt
         with: 
