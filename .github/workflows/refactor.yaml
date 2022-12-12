@@ -181,6 +181,9 @@ jobs:
       matrix: 
         layers: ${{ fromJson(needs.terraform.outputs.networking_layers) }}
     steps:
+      - name: checkout
+        uses: actions/checkout@v3
+            
       - name: Test networking infra
         uses: ./.github/actions/run-terragrunt
         with: 
