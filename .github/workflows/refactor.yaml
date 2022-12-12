@@ -140,6 +140,9 @@ jobs:
         with:
           file: 'dev.json'
 
+      - run: echo ${{ steps.layers.outputs.metadata_layers }}
+        shell: bash
+
   setup-infra-datadog:
       name: datadog for ${{ inputs.environment }}(${{ matrix.layers }})
       runs-on: ubuntu-latest
