@@ -182,7 +182,7 @@ jobs:
         layers: ${{ fromJson(needs.terraform.outputs.networking_layers) }}
     steps:
       - name: Test networking infra
-        uses: mygainwell/acuity-github-assets/actions/run-terragrunt@9-runterragrunt
+        uses: .github/actions/run-terragrunt
         with: 
           working_dir: ${{ fromJson(needs.terraform.outputs.filemap_path)[matrix.layers] }}
           deploy: false            

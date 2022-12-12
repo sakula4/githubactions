@@ -1,0 +1,33 @@
+name: Execute Terragrunt Configuration
+description: Action to execute terragrunt configuration
+
+inputs:
+  working_dir:
+    description: terragrunt configuration releative path
+    required: true
+  deploy:
+    description: apply terragrunt configuration
+    required: true
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: terragrunt-plan
+      id: plan
+      run: |
+        terragrunt run-all plan \
+          --terragrunt-include-external-dependencies \
+          --terragrunt-source-update \
+          --terragrunt-non-interactive \
+          --terragrunt-working-dir ${{ inputs.working_dir }}
+      shell: bash
+    - name: terragrunt-apply
+      id: apply
+      if: ${{ inputs.deploy == 'true' }}
+      run: |
+        terragrunt run-all apply \
+          --terragrunt-include-external-dependencies \
+          --terragrunt-source-update \
+          --terragrunt-working-dir ${{ inputs.workding_dir }}
+      shell: bash
