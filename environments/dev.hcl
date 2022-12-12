@@ -4,8 +4,8 @@ locals {
   awslogs_bucket = "gwt-testorg-account-id-us1-awslogs"
 
   aws = {
-    account_id   = "account-id"
-    canonical_id = "a4270b16ebd38625830b0229ce2b43f045577e85c4d7f39ae0ad2a533fe10889"
+    account_id   = "798001646746"
+    canonical_id = "f3cc392736dff1e97be6adff0fbd30fbf53b3e17d78700194624c899238ec5d2"
     alias        = "dxc-aws-ppa-dxchhs-edwproducts-dev-us"
   }
 
