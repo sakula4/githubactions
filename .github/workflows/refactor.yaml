@@ -157,7 +157,7 @@ jobs:
         run: | 
           echo ${{ matrix.layers }}
           echo ${{ needs.terraform.outputs.filemap_path }}
-          echo ${{ fromJson(needs.terraform.outputs.filemap_path)[${{ matrix.layers }}] }}
+          echo ${{ fromJson(needs.terraform.outputs.filemap_path)[matrix.layers] }}
   setup-infra-baseline:
     name: baseline for ${{ inputs.environment }}(${{ matrix.layers }})
     runs-on: ubuntu-latest
