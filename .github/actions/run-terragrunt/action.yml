@@ -17,7 +17,7 @@ runs:
       shell: bash
       run: |
         ls -al
-        ls -al githubactions
+        ls -al ${{ inputs.working_dir }}
     - name: terragrunt-plan
       id: plan
       run: |
