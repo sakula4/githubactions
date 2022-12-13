@@ -13,6 +13,11 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: test
+      shell: bash
+      run: |
+        ls -al
+        ls -al githubactions
     - name: terragrunt-plan
       id: plan
       run: |
