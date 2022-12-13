@@ -9,6 +9,8 @@ inputs:
     description: apply terragrunt configuration
     required: true
     default: "false"
+  ssh_private_key: 
+    required: true
 
 runs:
   using: composite
@@ -19,6 +21,13 @@ runs:
         ls -al
         ls -al lifecycle
         ls -al ${{ inputs.working_dir }}
+
+    - name: install ssh keys
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ inputs.ssh_private_key }}
+        known_hosts: github.com
+
     - name: terragrunt-plan
       id: plan
       run: |

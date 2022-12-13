@@ -198,7 +198,8 @@ jobs:
         uses: ./.github/actions/run-terragrunt
         with: 
           working_dir: ${{ fromJson(needs.terraform.outputs.filemap_path)[matrix.layers] }}
-          deploy: false 
+          deploy: false
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
 
                      
 
