@@ -20,7 +20,7 @@ runs:
           --terragrunt-include-external-dependencies \
           --terragrunt-source-update \
           --terragrunt-non-interactive \
-          --terragrunt-working-dir ${{ inputs.working_dir }}
+          --terragrunt-working-dir githubactions/${{ inputs.working_dir }}
       shell: bash
     - name: terragrunt-apply
       id: apply
