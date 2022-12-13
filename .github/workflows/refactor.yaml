@@ -61,6 +61,7 @@ env:
   tableau_stack: "['tableau_server']"
   abc_stack: "['abc_network','abc_database','dbx_queues']"
   datadog_stack: "['datadog']"
+  ENV: ${{ github.event.inputs.environment }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -197,7 +198,9 @@ jobs:
         uses: ./.github/actions/run-terragrunt
         with: 
           working_dir: ${{ fromJson(needs.terraform.outputs.filemap_path)[matrix.layers] }}
-          deploy: false            
+          deploy: false 
+
+                     
 
 
   setup-infra-metadata:
