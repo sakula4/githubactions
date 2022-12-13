@@ -17,6 +17,7 @@ runs:
       shell: bash
       run: |
         ls -al
+        ls -al lifecycle
         ls -al ${{ inputs.working_dir }}
     - name: terragrunt-plan
       id: plan

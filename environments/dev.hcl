@@ -43,7 +43,7 @@ locals {
 
   public_dns = {
     version = ""
-    path    = "lifecycle/public_dns"
+    path    = "lifecycle/public-dns"
     enabled = true
     domain = {
       name    = "dev"
