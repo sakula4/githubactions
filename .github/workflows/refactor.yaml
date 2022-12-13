@@ -51,7 +51,7 @@ on:
 
 
 permissions:
- content: read
+ contents: read
 
 env:
   metadata_stack: "['dbx_integration','reference_data','metastore']"
