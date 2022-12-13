@@ -49,6 +49,10 @@ on:
 # env:
 #   LAYERS: [abc-database,abc-network,account-baseline,alb,datadog,dbx-integration,dbx-queues,public-dns,reference-data,ssm-documents,tableau-server,tenant-mo,tenant-oz,viz-network]
 
+
+permissions:
+ content: read
+
 env:
   metadata_stack: "['dbx_integration','reference_data','metastore']"
   datalake_stack: "['datalake','tenant_network','workspace','cluster_policies','unity_catalog']"
