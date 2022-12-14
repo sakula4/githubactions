@@ -250,7 +250,7 @@ jobs:
   setup-infra-Datalake:
       name: datalake for ${{ inputs.environment }}(${{ matrix.layers }})
       needs: [terraform, setup-infra-abc]
-      uses: ./.github/workflows/test-backend.yml
+      uses: ./.github/workflows/test-backend.yaml
       with:
         environment: dev
 
