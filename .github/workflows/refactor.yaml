@@ -75,7 +75,7 @@ jobs:
       AWS_REGION: 'us-east-1'
       DELETED_RESOURCES: false
     outputs:
-      metadata_layers: ${{ steps.layers.outputs.metadata_layers }}
+      metadata_layers: ${{ env.metadata_stack }} #${{ steps.layers.outputs.metadata_layers }}
       datadog_layers: ${{ steps.layers.outputs.datadog_layers }}
       baseline_layers: ${{ steps.layers.outputs.baseline_layers }}
       networking_layers: ${{ steps.layers.outputs.networking_layers }}
@@ -156,7 +156,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        layers: ${{ env.metadata_stack }}
+        layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
     steps:
       - name: echo ${{ matrix.layers }}
         shell: bash
