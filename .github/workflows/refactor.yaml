@@ -84,6 +84,7 @@ jobs:
       abc_layers: ${{ steps.layers.outputs.abc_layers }}
       datalake_layers: ${{ steps.layers.outputs.datalake_layers }}
       filemap_path: ${{ steps.layers.outputs.filepath_map }}
+      test_layers: ${{steps.layers.outputs.test_layers }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -130,16 +131,17 @@ jobs:
           masked: false
 
 
-      # - name: extract layers when enabled key is true
-      #   id: layers
-      #   run: |
-      #     chmod +x dev.json scripts/resolveLayers.py
-      #     python -u scripts/resolveLayers.py dev.json > test.txt
-      #     cat test.txt
-      #     echo $GITHUB_OUTPUT
-      #     cat test.txt >> $GITHUB_OUTPUT
-      #     echo $GITHUB_OUTPUT
-      #   shell: bash
+      - name: extract layers when enabled key is true
+        id: layers
+        run: |
+          chmod +x dev.json scripts/resolveLayers.py
+          python -u scripts/resolveLayers.py dev.json > test.txt
+          cat test.txt
+          echo $GITHUB_OUTPUT
+          cat test.txt >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
+          echo "test_layers=${{ env.test_stack }}" >> $GITHUB_OUTPUS
+        shell: bash
 
       - name: extract layers
         id: layers
@@ -158,7 +160,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
+        layers: ${{ fromJson(needs.terraform.outputs.test_layers) }}
     steps:
       - name: echo 
         shell: bash
