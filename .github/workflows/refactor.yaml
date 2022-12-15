@@ -153,15 +153,15 @@ jobs:
   test-layers:
     name: test layers
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      matrix:
-        layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
+    # strategy:
+    #   max-parallel: 1
+    #   matrix:
+    #     layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
     steps:
-      - name: echo ${{ matrix.layers }}
+      - name: echo 
         shell: bash
         run: |
-          echo ${{ matrix.layers }}
+          echo ${{ needs.terraform.outputs.metadata_layers }}
 
   # setup-infra-datadog:
   #   name: datadog for ${{ inputs.environment }}(${{ matrix.layers }})
