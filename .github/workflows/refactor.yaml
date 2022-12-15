@@ -150,18 +150,18 @@ jobs:
         shell: bash
 
   # Test- layers
-    test-layers:
-      name: test layers
-      runs-on: ubuntu-latest
-      strategy:
-        max-parallel: 1
-        matrix:
-          layers: $${{ env.metadata_stack }}
-      steps:
-        - name: echo ${{ matrix.layers }}
-          shell: bash
-          run: |
-            echo ${{ matrix.layers }}
+  test-layers:
+    name: test layers
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        layers: $${{ env.metadata_stack }}
+    steps:
+      - name: echo ${{ matrix.layers }}
+        shell: bash
+        run: |
+          echo ${{ matrix.layers }}
 
   # setup-infra-datadog:
   #   name: datadog for ${{ inputs.environment }}(${{ matrix.layers }})
