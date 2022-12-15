@@ -62,6 +62,7 @@ env:
   abc_stack: "['abc_network','abc_database','dbx_queues']"
   datadog_stack: "['datadog']"
   ENV: ${{ github.event.inputs.environment }}
+  test_stack: [dbx_integration,reference_data,metastore]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -153,10 +154,10 @@ jobs:
   test-layers:
     name: test layers
     runs-on: ubuntu-latest
-    # strategy:
-    #   max-parallel: 1
-    #   matrix:
-    #     layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        layers: ${{ env.test_stack }}
     steps:
       - name: echo 
         shell: bash
