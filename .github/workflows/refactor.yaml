@@ -157,10 +157,10 @@ jobs:
     name: test layers
     runs-on: ubuntu-latest
     needs: terraform
-    # strategy:
-    #   max-parallel: 1
-    #   matrix:
-    #     layers: ${{ fromJson(needs.terraform.outputs.test_layers) }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        layers: ${{ needs.terraform.outputs.test_layers }}
     steps:
       - name: echo 
         shell: bash
