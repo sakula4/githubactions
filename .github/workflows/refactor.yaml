@@ -140,7 +140,7 @@ jobs:
           echo $GITHUB_OUTPUT
           cat test.txt >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
-          echo "test_layers=${{ env.test_stack }}" >> $GITHUB_OUTPUS
+          echo "test_layers=${{ env.test_stack }}" >> $GITHUB_OUTPUT
         shell: bash
 
       # - name: extract layers
