@@ -119,7 +119,6 @@ jobs:
       #   shell: bash
 
       - name: Generate HCL to Json
-        uses: 
         run: |
           hcl2json environments/dev.hcl > dev.json
           cat dev.json
