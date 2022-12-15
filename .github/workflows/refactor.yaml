@@ -157,7 +157,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        layers: ${{ env.test_stack }}
+        layers: ${{ fromJson(env.test_stack) }}
     steps:
       - name: echo 
         shell: bash
