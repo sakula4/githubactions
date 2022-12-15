@@ -143,11 +143,11 @@ jobs:
           echo "test_layers=${{ env.test_stack }}" >> $GITHUB_OUTPUS
         shell: bash
 
-      - name: extract layers
-        id: layers
-        uses: sakula4/test-repo/actions/pyton-test@main
-        with:
-          file: 'dev.json'
+      # - name: extract layers
+      #   id: layers
+      #   uses: sakula4/test-repo/actions/pyton-test@main
+      #   with:
+      #     file: 'dev.json'
 
       - run: echo ${{ steps.layers.outputs.metadata_layers }}
         shell: bash
