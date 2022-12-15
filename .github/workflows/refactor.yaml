@@ -158,7 +158,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        layers: ${{ fromJson(env.test_stack) }}
+        layers: ${{ fromJson(needs.terraform.outputs.metadata_layers) }}
     steps:
       - name: echo 
         shell: bash
