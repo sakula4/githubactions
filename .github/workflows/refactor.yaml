@@ -160,7 +160,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        layers: ${{ fromJson(needs.terraform.outputs.test_layers) }}
+        layers: ${{ fromJson(${{ env.test_stack }}) }}
     steps:
       - name: echo 
         shell: bash
