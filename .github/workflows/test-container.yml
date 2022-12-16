@@ -123,8 +123,8 @@ jobs:
 
       - name: Generate HCL to Json
         run: |
-          ls -al
-          docker run --rm -v environments:/data tmccombs/hcl2json -- /data/dev.hcl | jq .locals[0].abc_database.enabled
+          ls -al environments
+          docker run --rm -v $(pwd):/data tmccombs/hcl2json -- /data/dev.hcl 
         shell: bash
 
       - name: JSON to variables
