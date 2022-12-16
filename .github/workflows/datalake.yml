@@ -11,10 +11,6 @@ on:
         - us-west-1
       environment:
         type: environment
-      datalake_layers:
-        type: string
-        required: false
-        default: "['datalake','tenant_network','workspace','cluster_policies','unity_catalog']"
 
   # repository_dispatch:
   #   types:
@@ -25,7 +21,7 @@ on:
 
 jobs:
   update:
-    name: datalake for ${{ inputs.environment }}(${{ github.event.inputs.datalake_layers }})
+    name: datalake for ${{ inputs.environment }}
     runs-on: ubuntu-latest
     # if: ${{ matrix.layers }}
     strategy: 
@@ -37,8 +33,8 @@ jobs:
         id: layer
         shell: bash
         run: |
-          docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /data/${{ github.event.inputs.environment }}.hcl
-          echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/data tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl | jq .locals[0].abc_database.enabled)" >> $GITHUB_OUTPUT
+          docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl
+          echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl | jq .locals[0].${{ matrix.layers }}.enabled)" >> $GITHUB_OUTPUT
 
       - name: run terragrunt
         if: ${{ steps.layer.outputs.layerEnabled == 'true' }}
