@@ -24,22 +24,23 @@ on:
 
 
 jobs:
-  name: datalake for ${{ inputs.environment }}(${{ github.event.inputs.datalake_layers }})
-  runs-on: ubuntu-latest
-  # if: ${{ matrix.layers }}
-  strategy: 
-    max-parallel: 1
-    matrix: 
-      layers: ['datalake','tenant_network','workspace','cluster_policies','unity_catalog']
-  steps:
-    - name: test layers
-      id: layer
-      shell: bash
-      run: |
-        docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /data/${{ github.events.inputs.environment }}.hcl
-        echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/data tmccombs/hcl2json -- /tmp/${{ github.events.inputs.environment }}.hcl | jq .locals[0].abc_database.enabled)" >> $GITHUB_OUTPUT
+  update:
+    name: datalake for ${{ inputs.environment }}(${{ github.event.inputs.datalake_layers }})
+    runs-on: ubuntu-latest
+    # if: ${{ matrix.layers }}
+    strategy: 
+      max-parallel: 1
+      matrix: 
+        layers: ['datalake','tenant_network','workspace','cluster_policies','unity_catalog']
+    steps:
+      - name: test layers
+        id: layer
+        shell: bash
+        run: |
+          docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /data/${{ github.events.inputs.environment }}.hcl
+          echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/data tmccombs/hcl2json -- /tmp/${{ github.events.inputs.environment }}.hcl | jq .locals[0].abc_database.enabled)" >> $GITHUB_OUTPUT
 
-    - name: run terragrunt
-      if: ${{ steps.layer.outputs.layerEnabled == 'true' }}
-      run: |
-        echo "test"
+      - name: run terragrunt
+        if: ${{ steps.layer.outputs.layerEnabled == 'true' }}
+        run: |
+          echo "test"
