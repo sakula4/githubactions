@@ -70,9 +70,10 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
-    container: tmccombs/hcl2json
-    volumes:
-      - data:/environments
+    container: 
+      image: tmccombs/hcl2json
+      volumes:
+        - data:/environments
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
