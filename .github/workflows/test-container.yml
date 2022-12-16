@@ -124,6 +124,7 @@ jobs:
       - name: Generate HCL to Json
         run: |
           ls -al environments
+          echo $(pwd)
           docker run --rm -v $(pwd):/data tmccombs/hcl2json -- /data/dev.hcl 
         shell: bash
 
