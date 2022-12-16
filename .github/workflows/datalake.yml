@@ -37,8 +37,8 @@ jobs:
         id: layer
         shell: bash
         run: |
-          docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /data/${{ github.events.inputs.environment }}.hcl
-          echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/data tmccombs/hcl2json -- /tmp/${{ github.events.inputs.environment }}.hcl | jq .locals[0].abc_database.enabled)" >> $GITHUB_OUTPUT
+          docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /data/${{ github.event.inputs.environment }}.hcl
+          echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/data tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl | jq .locals[0].abc_database.enabled)" >> $GITHUB_OUTPUT
 
       - name: run terragrunt
         if: ${{ steps.layer.outputs.layerEnabled == 'true' }}
