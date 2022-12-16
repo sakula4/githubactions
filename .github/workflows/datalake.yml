@@ -29,10 +29,14 @@ jobs:
       matrix: 
         layers: ['datalake','tenant_network','workspace','cluster_policies','unity_catalog']
     steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        
       - name: test layers
         id: layer
         shell: bash
         run: |
+          ls -al
           docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl
           echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl | jq .locals[0].${{ matrix.layers }}.enabled)" >> $GITHUB_OUTPUT
 
