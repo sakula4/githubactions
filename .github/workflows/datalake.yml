@@ -21,7 +21,7 @@ on:
 
 jobs:
   update:
-    name: datalake for ${{ inputs.environment }}
+    name: datalake for ${{ inputs.environment }}(${{ matrix.layers }})
     runs-on: ubuntu-latest
     # if: ${{ matrix.layers }}
     strategy: 
@@ -31,13 +31,11 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        
+
       - name: test layers
         id: layer
         shell: bash
         run: |
-          ls -al
-          docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl
           echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ github.event.inputs.environment }}.hcl | jq .locals[0].${{ matrix.layers }}.enabled)" >> $GITHUB_OUTPUT
 
       - name: run terragrunt
