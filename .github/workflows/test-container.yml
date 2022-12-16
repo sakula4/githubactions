@@ -70,10 +70,10 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
-    container: 
-      image: tmccombs/hcl2json
-      volumes:
-        - data:/environments
+    # container: 
+    #   image: tmccombs/hcl2json
+    #   volumes:
+    #     - data:/environments
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -123,7 +123,7 @@ jobs:
 
       - name: Generate HCL to Json
         run: |
-          data/dev.hcl
+          docker run --rm -v ./environments/:/data tmccombs/hcl2json -- /data/dev.hcl | jq .locals[0].abc_database.enabled
         shell: bash
 
       - name: JSON to variables
