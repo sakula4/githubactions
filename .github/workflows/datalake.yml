@@ -20,15 +20,54 @@ on:
 
 
 jobs:
+  alpine-generic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Generic alpine Image
+        run: |
+          docker pull tmccombs/hcl2json
+          
+      - name: Pull Generic alpine Image
+        run: docker images
+
+      - name: Save Docker Image
+        run: |
+          docker save --output alpine_generic.tar manipvn/alpine_generic
+
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v3
+        with:
+          path: alpine_generic.tar
+          key: alpine-generic-cache
+
+
   update:
     name: datalake for ${{ inputs.environment }}(${{ matrix.layers }})
     runs-on: ubuntu-latest
+    needs: [alpine-generic] 
     # if: ${{ matrix.layers }}
     strategy: 
       max-parallel: 1
       matrix: 
         layers: ['datalake','tenant_network','workspace','cluster_policies','unity_catalog']
     steps:
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v3
+        with:
+          path: alpine_generic.tar
+          key: alpine-generic-cache
+          restore-keys: |
+            alpine-generic-cache
+
+      - name: Display structure of downloaded files
+        run: | 
+          ls -lrth
+          docker load --input alpine_generic.tar
+          docker images
+
+
       - name: checkout
         uses: actions/checkout@v3
 
