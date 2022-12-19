@@ -32,7 +32,7 @@ jobs:
 
       - name: Save Docker Image
         run: |
-          docker save --output alpine_generic.tar manipvn/alpine_generic
+          docker save --output alpine_generic.tar tmccombs/hcl2json
 
       - name: Cache Primes
         id: cache-primes
