@@ -1,4 +1,4 @@
-name: CI
+name: test drop down
 
 on:
   workflow_dispatch:
@@ -34,6 +34,12 @@ on:
       tableau:
         type: boolean
         description: tableau-server
+      deploy:
+        type: choice
+        options:
+        - plan
+        - plan and apply
+        default: plan
 
 jobs:
   build:
@@ -54,4 +60,6 @@ jobs:
           echo "datalake is ${{ github.event.inputs.datalake }}" / ${{ inputs.datalake }}"
           echo "gw360 is ${{ github.event.inputs.gw360 }}" / ${{ inputs.gw360 }}"
           echo "tableau is ${{ github.event.inputs.tableau }}" / ${{ inputs.tableau }}"
+          echo "deploy is ${{ github.event.inputs.deploy }}" / ${{ inputs.deploy }}
+
 
