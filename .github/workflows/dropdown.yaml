@@ -62,4 +62,9 @@ jobs:
           echo "tableau is ${{ github.event.inputs.tableau }}" / ${{ inputs.tableau }}"
           echo "deploy is ${{ github.event.inputs.deploy }}" / ${{ inputs.deploy }}
 
+      - name: test 
+        if: contains(github.event.inputs.deploy, 'apply')
+        run: |
+          echo "success"
+
 
