@@ -49,7 +49,7 @@ function parseInputs {
         iamCredentials=${INPUT_IAM_CREDS_SECRET}
     else
         echo "Input IAM Credential Secert cannot be empty"
-        exit 1
+        # exit 1
     fi
     # Optional inputs
     tfWorkingDir="."
@@ -169,7 +169,7 @@ function main {
     parseInputs
     installTerraform
     configureSSHKey
-    configureIAM
+    # configureIAM
     installTerragrunt
 
     cd ${GITHUB_WORKSPACE}/${tfWorkingDir}
