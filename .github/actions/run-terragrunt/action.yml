@@ -21,6 +21,7 @@ runs:
         ls -al
         ls -al lifecycle
         ls -al ${{ inputs.working_dir }}
+        export TF_LOG=DEBUG
 
     - name: install ssh keys
       uses: shimataro/ssh-key-action@v2

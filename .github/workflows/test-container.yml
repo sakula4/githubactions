@@ -122,12 +122,14 @@ jobs:
       #   shell: bash
 
       - name: Generate HCL to Json
+        id: layer
         run: |
           ls -al environments
           cd environments
           echo $(pwd)
-          docker run --rm -v $(pwd):/data tmccombs/hcl2json -- /data/dev.hcl 
+          echo "layerEnabled=$(docker run --rm -v $(pwd):/data tmccombs/hcl2json -- /data/dev.hcl | jq .locals[0].abc_database.enabled)" >> $GITHUB_OUTPUT
         shell: bash
+        
 
       - name: JSON to variables
         uses: rgarcia-phi/json-to-variables@v1.1.0
