@@ -70,10 +70,14 @@ function configureSSHKey {
     # /root/.ssh/known_hosts file. 
     echo "Adding SSH Key"
     mkdir -p /root/.ssh
-    if [[ ! -f "/root/.ssh/id_rsa" ]] && [[ "${tfSSHPrivateKey}" != "" ]]; then
-        ssh_key=$(aws --region us-east-1 secretsmanager get-secret-value --secret-id ${tfSSHPrivateKey} --query SecretString --output text)
+#     if [[ ! -f "/root/.ssh/id_rsa" ]] && [[ "${tfSSHPrivateKey}" != "" ]]; then
+#         ssh_key=$(aws --region us-east-1 secretsmanager get-secret-value --secret-id ${tfSSHPrivateKey} --query SecretString --output text)
+#         cat > /root/.ssh/id_rsa <<-EOF
+# ${ssh_key}
+# EOF
+
         cat > /root/.ssh/id_rsa <<-EOF
-${ssh_key}
+${tfSSHPrivateKey}
 EOF
         chmod 600 /root/.ssh/id_rsa
         ssh-keyscan github.com >> /root/.ssh/known_hosts
