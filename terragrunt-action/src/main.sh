@@ -81,14 +81,14 @@ EOF
     
 }
 
-function configureIAM {
-    # This function should get the IAM credentials stored in secrets Manager
-    # in US-EAST-1 and export them as AWS Environment variables. 
-    # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
-    aws --region us-east-1 secretsmanager get-secret-value --secret-id ${iamCredentials} --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > /tmp/secrets.env
-    eval $(cat /tmp/secrets.env | sed 's/^/export /')
-    rm -f /tmp/secrets.env
-}
+# function configureIAM {
+#     # This function should get the IAM credentials stored in secrets Manager
+#     # in US-EAST-1 and export them as AWS Environment variables. 
+#     # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+#     aws --region us-east-1 secretsmanager get-secret-value --secret-id ${iamCredentials} --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > /tmp/secrets.env
+#     eval $(cat /tmp/secrets.env | sed 's/^/export /')
+#     rm -f /tmp/secrets.env
+# }
 
 function installTerraform {
     if [[ "${tfVersion}" == "latest" ]]; then
