@@ -18,9 +18,20 @@ on:
         type: environment
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: test withouth enviornment
+      run: |
+        echo ${{ secrets.test }}
+        
   greet:
     runs-on: ubuntu-latest
-
+    environment: dev
     steps:
     - name: Send greeting
       run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", ""]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+      
+    - name: Test environment secrets
+      run: |
+        echo ${{ secrets.test }}
