@@ -31,6 +31,6 @@ RUN apk --no-cache add \
 
 RUN ["/bin/sh", "-c", "apk add --update --no-cache bash ca-certificates curl git jq openssh"]
 
-# COPY ["src", "/src/"]
+COPY ["src", "/src/"]
 
-# ENTRYPOINT ["/src/main.sh"]
+ENTRYPOINT ["/src/main.sh"]
