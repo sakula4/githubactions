@@ -48,7 +48,7 @@ jobs:
   
   test-another-job:
     uses: ./.github/workflows/mixed_inputs.yml
-    needs: wait-on-approval
+    # needs: wait-on-approval
     with:
       # name: monalisa
       message: Hello worls
@@ -67,7 +67,7 @@ jobs:
         run: 
           echo ${{ needs.test-another-job.result }}
         shell: bash
-        
+
       - name: Close Issue
         uses: peter-evans/close-issue@v2
         with:
