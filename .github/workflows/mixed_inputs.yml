@@ -21,6 +21,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
     - name: test withouth enviornment
       run: |
