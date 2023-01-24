@@ -64,6 +64,7 @@ jobs:
     if: ${{ always() }}
     needs: [stuff, test-another-job]
     steps:
+      - uses: actions/checkout@v2
       - name: test-output
         run: 
           echo ${{ needs.test-another-job.result }}
