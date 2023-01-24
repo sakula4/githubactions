@@ -33,7 +33,6 @@ jobs:
         run: |
           cd sample-tf
           terraform init
-          #tfcmt -pr ${{ steps.create-issue.outputs.number }} plan -- terraform plan
           tfcmt plan -- terraform plan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
