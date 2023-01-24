@@ -42,5 +42,13 @@ jobs:
         run: |
           echo "wait for approval"
           exit 1
+  
+  test-another-job:
+    uses: ./.github/workflows/mixed_inputs.yml
+    with:
+      name: monalisa
+      message: Hello worls
+      use-emoji: false
+      environment: stage
 
       #Approval
