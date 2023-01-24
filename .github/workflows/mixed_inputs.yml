@@ -10,7 +10,8 @@ on:
       #   - monalisa
       #   - cschleiden
       message:
-        required: true
+        # required: true
+        type: string
       # use-emoji:
       #   type: boolean
       #   description: Include  emojis
