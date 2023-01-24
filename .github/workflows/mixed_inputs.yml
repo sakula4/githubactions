@@ -3,12 +3,12 @@ name: Mixed inputs
 on:
   workflow_call:
     inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options: 
-        - monalisa
-        - cschleiden
+      # name:
+      #   type: choice
+      #   description: Who to greet
+      #   options: 
+      #   - monalisa
+      #   - cschleiden
       message:
         required: true
       use-emoji:
