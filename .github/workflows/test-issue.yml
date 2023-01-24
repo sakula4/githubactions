@@ -16,6 +16,7 @@ jobs:
 
       - name: run tfcmt
         run: |
+          git clone https://github.com/suzuki-shunsuke/tfcmt
           cd sample-tf
           terraform init
-          tfcmt -pr ${{ steps.create-issue.outputs.number }} plan -- terraform plan
+          tfcmt -repo tfcmt -pr ${{ steps.create-issue.outputs.number }} plan -- terraform plan
