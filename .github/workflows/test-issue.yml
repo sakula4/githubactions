@@ -20,7 +20,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_ID: ${{ github.run_id }}
-          URL: ${{ github.event.repository.url }} 
+          URL: ${{ github.event.repository.url }}
+          ENVIRONMENT: dev
+          REGION: us-east-1 
     
       - name: test workflow id
         run: |
