@@ -35,7 +35,8 @@ jobs:
 
   wait-on-approval:
     runs-on: ubuntu-latest
-    env: stage
+    needs: stuff
+    environment: stage
     steps:
       - name: test
         run: |
