@@ -80,7 +80,6 @@ jobs:
 
       - name: update issue with comments if failed.
         if: ${{ needs.test-another-job.result == 'failure' }}
-      - id: create-issue
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
