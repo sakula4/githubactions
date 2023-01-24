@@ -45,6 +45,7 @@ jobs:
   
   test-another-job:
     uses: ./.github/workflows/mixed_inputs.yml
+    needs: wait-on-approval
     with:
       name: monalisa
       message: Hello worls
