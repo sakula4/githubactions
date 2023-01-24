@@ -17,7 +17,8 @@ jobs:
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_ID: ${{ toJson(github.run_id) }} 
+          RUN_ID: ${{ toJson(github.run_id) }}
+          URL: ${{ toJson(github.repository.url) }} 
     
       - name: test workflow id
         run: |
