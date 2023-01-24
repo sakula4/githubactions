@@ -18,11 +18,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_ID: ${{ github.run_id }}
-          URL: ${{ toJson(github.repository.url) }} 
+          URL: ${{ github.event.repository.url }} 
     
       - name: test workflow id
         run: |
-          echo ${{ toJson(github.repository) }}
+          echo ${{ toJson(github.event.repository) }}
 
 
       - name: install-tfcmt
