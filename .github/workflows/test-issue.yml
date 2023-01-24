@@ -47,9 +47,9 @@ jobs:
     uses: ./.github/workflows/mixed_inputs.yml
     needs: wait-on-approval
     with:
-      name: monalisa
+      # name: monalisa
       message: Hello worls
-      use-emoji: false
+      # use-emoji: false
       environment: stage
 
       #Approval
