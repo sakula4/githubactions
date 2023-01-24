@@ -1,5 +1,5 @@
 ---
-title: deployment triggered in {{ env.ENVIRONMENT }}-{{ env.REGION }}
+title: Deployment triggered in {{ env.ENVIRONMENT }}-{{ env.REGION }} by {{ payload.sender.login }}
 assignees: sakula4
 labels: test
 ---
