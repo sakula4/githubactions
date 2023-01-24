@@ -18,6 +18,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
+      - name: test workflow id
+        run: |
+          echo ${{ toJson(github.run_id) }}
+
+
       - name: install-tfcmt
         run: |
           version=$(curl -LsS https://api.github.com/repos/suzuki-shunsuke/tfcmt/releases/latest | jq -r .name)
