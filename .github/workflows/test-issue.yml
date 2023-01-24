@@ -17,7 +17,7 @@ jobs:
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          label: deployment-started
+          LABEL: 'deployment-started'
     
       - name: install-tfcmt
         run: |
@@ -50,7 +50,7 @@ jobs:
   
   test-another-job:
     uses: ./.github/workflows/mixed_inputs.yml
-    # needs: wait-on-approval
+    needs: stuff
     with:
       # name: monalisa
       message: Hello worls
