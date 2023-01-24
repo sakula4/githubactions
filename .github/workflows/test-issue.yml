@@ -32,3 +32,13 @@ jobs:
           tfcmt -pr ${{ steps.create-issue.outputs.number }} plan -- terraform plan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  wait-on-approval:
+    runs-on: ubuntu-latest
+    env: stage
+    steps:
+      - name: test
+        run: |
+          echo "wait for approval"
+
+      #Approval
