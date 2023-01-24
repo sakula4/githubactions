@@ -41,7 +41,7 @@ jobs:
       - name: test
         run: |
           echo "wait for approval"
-          exit 1
+          # exit 1
   
   test-another-job:
     uses: ./.github/workflows/mixed_inputs.yml
