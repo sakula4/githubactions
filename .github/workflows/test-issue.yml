@@ -27,6 +27,7 @@ jobs:
           chmod +x /usr/local/bin/tfcmt
         shell: bash
 
+
       - name: run tfcmt
         run: |
           cd sample-tf
@@ -59,13 +60,13 @@ jobs:
 
   close-github-issue:
     runs-on: ubuntu-latest
-    needs: test-another-job
+    needs: [stuff,test-another-job]
     steps:
       - name: test-id
         run: |
           echo ${{ needs.stuff.outputs.github-issue-id }}
         shell: bash
-        
+
       - name: Close Issue
         uses: peter-evans/close-issue@v2
         with:
