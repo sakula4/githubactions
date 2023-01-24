@@ -1,5 +1,5 @@
 ---
-title: Stage deployment triggered by {{ github.run_id }}
+title: Stage deployment triggered by {{ env.RUN_ID }}
 assignees: sakula4
 labels: test
 ---
