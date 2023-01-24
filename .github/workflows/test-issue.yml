@@ -36,15 +36,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  wait-on-approval:
-    runs-on: ubuntu-latest
-    needs: stuff
-    environment: stage
-    steps:
-      - name: test
-        run: |
-          echo "wait for approval"
-          # exit 1
+  # wait-on-approval:
+  #   runs-on: ubuntu-latest
+  #   needs: stuff
+  #   environment: stage
+  #   steps:
+  #     - name: test
+  #       run: |
+  #         echo "wait for approval"
+  #         # exit 1
   
   test-another-job:
     uses: ./.github/workflows/mixed_inputs.yml
@@ -60,13 +60,14 @@ jobs:
 
   close-github-issue:
     runs-on: ubuntu-latest
-    needs: [stuff,test-another-job]
+    if: ${{ always() }}
+    needs: [stuff, test-another-job]
     steps:
-      - name: test-id
-        run: |
-          echo ${{ needs.stuff.outputs.github-issue-id }}
+      - name: test-output
+        run: 
+          echo ${{ needs.test-another-job.result }}
         shell: bash
-
+        
       - name: Close Issue
         uses: peter-evans/close-issue@v2
         with:

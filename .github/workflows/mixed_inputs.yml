@@ -37,3 +37,4 @@ jobs:
     - name: Test environment secrets
       run: |
         echo ${{ secrets.test }}
+        exit 1
