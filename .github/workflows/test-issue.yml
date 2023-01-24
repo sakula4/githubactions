@@ -17,6 +17,7 @@ jobs:
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          label: 'deployment-started'
     
       - name: install-tfcmt
         run: |
@@ -68,10 +69,19 @@ jobs:
           echo ${{ needs.test-another-job.result }}
         shell: bash
 
-      - name: Close Issue
+      - name: Close Issue if job success
+        if: ${{ needs.test-another-job.result == 'success' }}
         uses: peter-evans/close-issue@v2
         with:
           issue-number: ${{ needs.stuff.outputs.github-issue-id }}
           comment: Auto-closing issue 
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}     
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: update issue with comments if failed.
+        if: ${{ needs.test-another-job.result == 'failure' }}
+      - id: create-issue
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          label: 'deployment-failed'
