@@ -17,7 +17,6 @@ jobs:
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LABEL: 'deployment-started'
     
       - name: install-tfcmt
         run: |
@@ -84,4 +83,5 @@ jobs:
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          label: 'deployment-failed'
+          update_existing: true
+          search_existing: all

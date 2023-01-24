@@ -1,5 +1,5 @@
 ---
-title: Someone just pushed {{ payload.sender.login }}
+title: Stage deployment triggered by {{ payload.sender.login }}
 assignees: sakula4
 labels: test
 ---
