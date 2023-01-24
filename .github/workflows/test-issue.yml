@@ -21,7 +21,7 @@ jobs:
     
       - name: test workflow id
         run: |
-          echo ${{ toJson(github.run_id) }}
+          echo ${{ toJson(github) }}
 
 
       - name: install-tfcmt
