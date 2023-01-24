@@ -14,14 +14,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
-    - name: install-tfcmt
-      run: |
-        version=$(curl -LsS https://api.github.com/repos/suzuki-shunsuke/tfcmt/releases/latest | jq -r .name)
-        curl -LsS https://github.com/suzuki-shunsuke/tfcmt/releases/download/${version}/tfcmt_linux_amd64.tar.gz -o /tmp/tfcmt_linux_amd64.tar.gz
-        tar -xvzf /tmp/tfcmt_linux_amd64.tar.gz
-        mv tfcmt /usr/local/bin/tfcmt
-        chmod +x /usr/local/bin/tfcmt
-      shell: bash
+      - name: install-tfcmt
+        run: |
+          version=$(curl -LsS https://api.github.com/repos/suzuki-shunsuke/tfcmt/releases/latest | jq -r .name)
+          curl -LsS https://github.com/suzuki-shunsuke/tfcmt/releases/download/${version}/tfcmt_linux_amd64.tar.gz -o /tmp/tfcmt_linux_amd64.tar.gz
+          tar -xvzf /tmp/tfcmt_linux_amd64.tar.gz
+          mv tfcmt /usr/local/bin/tfcmt
+          chmod +x /usr/local/bin/tfcmt
+        shell: bash
 
       - name: run tfcmt
         run: |
