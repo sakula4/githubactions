@@ -9,6 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: JasonEtco/create-an-issue@v2
+      - id: create-issue
+        uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: run tfcmt
+        run: |
+          cd sample-tf
+          terraform init
+          tfcmt -pr ${{ steps.create-issue.outputs.number }} plan -- terraform plan
