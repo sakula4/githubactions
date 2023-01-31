@@ -1,0 +1,58 @@
+name: Deploy Databricks
+
+on: 
+  workflow_dispatch:
+    inputs:
+      region:
+        type: choice
+        description: Select region
+        options:
+        - us-east-1
+        - us-west-1
+      environment:
+        type: environment
+      tenant:
+        type: choice
+        description: Select the tenant to be deployed
+        options:
+        - mo
+        - oz
+      deploy:
+        type: choice
+        description: 'Terragrunt plan and(or) apply'
+        default: 'plan'
+        options:
+        - plan
+        - apply
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_DEFAULT_REGION: ${{ inputs.region }}
+  AWS_IAM_ASSUME_ROLE: "arn:aws:iam::350828950339:role/gwt-acuity-infra-oidc-role" # ${{ secrets.AWS_IAM_ASSUME_ROLE }}
+  AWS_IAM_EXEC_ROLE: "arn:aws:iam::918623739618:role/gwt-acuity-infra-execution-role" # ${{ secrets.AWS_IAM_EXEC_ROLE }}
+  ENV: ${{ inputs.environment }}
+
+jobs:
+  # determine-tenant-layers:
+  #   uses: ubuntu-latest
+  #   steps:
+  #     - name: 'Checkout'
+  #       uses: actions/checkout@master
+
+  datalake-infra:
+    name: 'deploy-datalake-stack-${{ inputs.tenant }}'
+    uses: ./.github/workflows/common-workflow.yml
+    with:
+      region: ${{ inputs.region }}
+      layers: '["metastore","datalake","network","workspace","cluster_policies","unity_catalog","service_principals"]'
+      working_dir: 'lifecycle/tenant_${{ inputs.tenant }}'
+      deploy: ${{ inputs.deploy == 'apply' }}
+      aws_iam_assume_role: "arn:aws:iam::350828950339:role/gwt-acuity-infra-oidc-role"
+      env: ${{ fromJson('{ Development:"dev", Ephermal:"ephem", Production:"prod", Staging:"stage", Demo:"demo" }')[inputs.environment] }}      
+      aws_secrets_key_ref: "DATABRICKS"
+      aws_secrets_key_id: "github/workflows/databricks/admin"
+      tenant: ${{ inputs.tenant }}      
+    secrets: inherit

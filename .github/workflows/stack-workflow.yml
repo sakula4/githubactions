@@ -1,0 +1,123 @@
+# Ensure the layer name matches with the folder name defined under the lifecycle folder as well as the <env>.hcl file.
+
+name: Workflow to deploy stacks. Uses common-workflow.
+
+# Controls when the workflow will run
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+        default: 'dev'
+      region:
+        type: string
+        required: false
+        default: 'us-east-1'
+      deploy:
+        type: boolean
+        required: false
+        default: false
+      aws_iam_assume_role:
+        type: string
+        required: true        
+
+permissions:
+  contents: read
+  id-token: write
+
+
+env:
+  GITHUB_OAUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  # TF_LOG: "DEBUG"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  datadog:
+    name: 'deploy-datadog'
+    uses: ./.github/workflows/common-workflow.yml
+    with:
+      region: ${{ inputs.region }}
+      layers: '["datadog"]'
+      deploy: ${{ inputs.deploy }}
+      aws_iam_assume_role: ${{ inputs.aws_iam_assume_role }}
+      env: ${{ inputs.environment }}
+      aws_secrets_key_ref: "DD"
+      aws_secrets_key_id: "github/workflows/datadog"      
+    secrets: inherit
+
+  baseline:
+    name: 'deploy-baseline-stack'
+    uses: ./.github/workflows/common-workflow.yml
+    with:
+      region: ${{ inputs.region }}
+      layers: '["account_baseline","ssm_documents"]'
+      deploy: ${{ inputs.deploy }}
+      aws_iam_assume_role: ${{ inputs.aws_iam_assume_role }}
+      env: ${{ inputs.environment }}
+    secrets: inherit    
+
+  networking:
+    name: 'deploy-networking-stack'
+    uses: ./.github/workflows/common-workflow.yml
+    with:
+      region: ${{ inputs.region }}
+      layers: '["viz_network","public_dns","alb"]'
+      deploy: ${{ inputs.deploy }}
+      aws_iam_assume_role: ${{ inputs.aws_iam_assume_role }}
+      env: ${{ inputs.environment }}
+    secrets: inherit  
+
+  metadata:
+    name: 'deploy-metadata-stack'
+    needs: ['baseline','networking']
+    uses: ./.github/workflows/common-workflow.yml
+    with:
+      region: ${{ inputs.region }}
+      layers: '["dbx_integration","reference_data"]' #removed metastore and moved to datalake stack.
+      deploy: ${{ inputs.deploy }}
+      aws_iam_assume_role: ${{ inputs.aws_iam_assume_role }}
+      aws_secrets_key_ref: "DATABRICKS"
+      aws_secrets_key_id: "github/workflows/databricks/admin"
+      env: ${{ inputs.environment }}
+    secrets: inherit  
+
+  tableau-server:
+    name: 'deploy-tableau-server-stack'
+    needs: ['metadata']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke workflow without inputs. Wait for result
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: tableau-server-workflow.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{ "environment": "${{ inputs.environment }}", "region": "${{ inputs.region }}" }'          
+
+  abc-network:
+    name: 'deploy-abc-network-stack'
+    needs: ['metadata']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke workflow without inputs. Wait for result
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: abc-infra-workflow.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{ "environment": "${{ inputs.environment }}", "region": "${{ inputs.region }}" }'
+
+  datalake:
+    name: 'deploy-datalake-stack'
+    needs: ['metadata','abc-network']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke workflow without inputs. Wait for result
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: datalake-workflow.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{ "environment": "${{ inputs.environment }}", "region": "${{ inputs.region }}" }'
+          tenant: 'tenant-mo'
+
+
+

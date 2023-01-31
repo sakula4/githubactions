@@ -1,25 +1,46 @@
-name: Create Release
-on:
-  push:
-    branches:
-      - 'main'
-  workflow_dispatch:
+name-template: 'v$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
+version-template: '$MAJOR.$MINOR.$PATCH'
+version-resolver:
+  major:
+    labels:
+    - 'major'
+  minor:
+    labels:
+    - 'minor'
+    - 'enhancement'
+  patch:
+    labels:
+    - 'auto-update'
+    - 'patch'
+    - 'fix'
+    - 'bugfix'
+    - 'bug'
+    - 'hotfix'
+    - 'no-release'
+  default: 'minor'
 
-permissions:
-  contents: write
+categories:
+- title: '🚀 Enhancements'
+  labels:
+  - 'enhancement'
+  - 'patch'
+- title: '🐛 Bug Fixes'
+  labels:
+  - 'fix'
+  - 'bugfix'
+  - 'bug'
+  - 'hotfix'
+- title: '🤖 Automatic Updates'
+  labels:
+  - 'auto-update'
 
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout-repo
-        uses: actions/checkout@v3.1.0
-      
-      - name: create-release
-        uses: release-drafter/release-drafter@v5.20.0
-        with:
-          publish: true
-          prerelease: false
-          config-name: release-drafter.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+change-template: |
+  <details>
+    <summary>$TITLE @$AUTHOR (#$NUMBER)</summary>
+
+    $BODY
+  </details>
+
+template: |
+  $CHANGES

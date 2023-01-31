@@ -1,0 +1,144 @@
+name: Acuity Platform Live common workflow
+
+on:
+  workflow_call:
+    inputs:
+      region:
+        type: string
+        required: true
+        description: Region the resources to be deployed to
+        default: 'us-east-1'
+      layers:
+        type: string
+        required: true
+        description: Stack Layers to be executed.
+      deploy:
+        type: boolean
+        required: false
+        default: false
+      working_dir:
+        type: string
+        required: false
+        default: 'lifecycle'
+      aws_iam_assume_role:
+        type: string
+        required: true
+      env:
+        type: string
+        required: true
+      aws_secrets_key_id:
+        required: false
+        type: string
+      aws_secrets_key_ref:
+        required: false
+        type: string
+      tenant:
+        required: false
+        type: string
+
+
+env: 
+  tf_version: 'latest'
+  tg_version: 'v0.37.4'
+  ENV: ${{ inputs.env }}
+  # AWS_IAM_ASSUME_ROLE: ${{ inputs.aws_iam_assume_role }} #TODO - need to define this specific to each environment.
+  BASE_DIR: ${{ inputs.working_dir }}
+
+
+jobs:
+  infra-setup:
+    name: setup-${{ matrix.layers }}
+    runs-on: ubuntu-latest
+    strategy: 
+      max-parallel: 1
+      matrix: 
+        layers: ${{ fromJson(inputs.layers) }}
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
+
+      - name: check-if-layer-enabled-for-${{ inputs.environment }}-environment.
+        id: layer
+        shell: bash
+        run: |
+          if [ ${{ inputs.tenant }} != '' ]; then
+            echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ inputs.env }}-${{ inputs.region }}.hcl | jq .locals[0].${{ inputs.tenant }}.${{ matrix.layers }}.enabled)" >> $GITHUB_OUTPUT
+          else
+            echo "layerEnabled=$(docker run --rm -v $(pwd)/environments:/tmp tmccombs/hcl2json -- /tmp/${{ inputs.env }}-${{ inputs.region }}.hcl | jq .locals[0].${{ matrix.layers }}.enabled)" >> $GITHUB_OUTPUT
+          fi
+          echo "layerEnabledForTenant=$(cd ${{ inputs.working_dir }} && [ -d ${{ matrix.layers }} ] && echo true)" >> $GITHUB_OUTPUT
+      
+      - name: install-ssh-keys
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.PRIVATE_SSH_KEY }}
+          # name: id_rsa
+          known_hosts: github.com        
+
+      - name: configure-AWS-credentials
+        if: ${{ steps.layer.outputs.layerEnabled == 'true' && steps.layer.outputs.layerEnabledForTenant == 'true' }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ inputs.region }}
+          role-to-assume: ${{ inputs.aws_iam_assume_role }}
+          role-duration-seconds: 1200
+          role-session-name: gh-actions
+
+      - name: 'pull-secrets'
+        if: ${{ steps.layer.outputs.layerEnabled == 'true' && inputs.aws_secrets_key_ref != '' && inputs.aws_secrets_key_id != '' }}
+        uses: aws-actions/aws-secretsmanager-get-secrets@v1
+        with:
+          secret-ids: |
+            ${{ inputs.aws_secrets_key_ref }}, ${{ inputs.aws_secrets_key_id }}
+          parse-json-secrets: true
+
+      - name: terragrunt-init
+        if: ${{ steps.layer.outputs.layerEnabled == 'true' && steps.layer.outputs.layerEnabledForTenant == 'true' }}
+        uses: mygainwell/acuity-github-assets/actions/terragrunt-action@24-move-terragrunt-action
+        with:
+          ssh_private_key: ${{ secrets.PRIVATE_SSH_KEY }}
+          tf_version: ${{ env.tf_version }}
+          tg_version: ${{ env.tg_version }}
+          tg_subcommand: 'init'
+          tg_working_dir: ${{ inputs.working_dir }}/${{ matrix.layers }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      
+      - name: 'Tfcmt'
+        if: ${{ github.event_name == 'pull_request' }}
+        uses:  mygainwell/acuity-github-assets/actions/terragrunt-action@24-move-terragrunt-action
+        with:
+          tf_version: ${{ env.tf_version }}
+          tg_version: ${{ env.tg_version }}
+          tg_subcommand: 'tfcmt'
+          tg_working_dir: ${{ inputs.working_dir }}/${{ matrix.layers }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: terragrunt-plan
+        if: ${{ steps.layer.outputs.layerEnabled == 'true' && steps.layer.outputs.layerEnabledForTenant == 'true' }}
+        uses: mygainwell/acuity-github-assets/actions/terragrunt-action@24-move-terragrunt-action
+        with:
+          ssh_private_key: ${{ secrets.PRIVATE_SSH_KEY }}
+          tf_version: ${{ env.tf_version }}
+          tg_version: ${{ env.tg_version }}
+          tg_subcommand: 'plan'
+          tg_working_dir: ${{ inputs.working_dir }}/${{ matrix.layers }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}		
+
+      - name: terragrunt-apply
+        if: ${{ steps.layer.outputs.layerEnabled == 'true' && steps.layer.outputs.layerEnabledForTenant == 'true' && inputs.deploy == 'true' }}      
+        uses: mygainwell/acuity-github-assets/actions/terragrunt-action@24-move-terragrunt-action
+        with:
+          ssh_private_key: ${{ secrets.PRIVATE_SSH_KEY }}
+          tf_version: ${{ env.tf_version }}
+          tg_version: ${{ env.tg_version }}
+          tg_subcommand: 'apply'
+          tg_working_dir: ${{ inputs.working_dir }}/${{ matrix.layers }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}		
+
+
+
+

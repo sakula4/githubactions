@@ -1,0 +1,51 @@
+name: Acuity Platform Dev environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+      region:
+        type: choice
+        description: Select region
+        default: 'us-east-1'
+        options:
+        - us-east-1
+        - us-west-1
+      deploy:
+        type: choice
+        description: 'Terragrunt plan and(or) apply'
+        default: 'plan'
+        options:
+        - plan
+        - apply
+  # pull_request:
+  #   branches:
+  #     - dev
+
+
+permissions:
+  contents: read
+  id-token: write
+
+
+env:
+  ssh_private_key: ${{ secrets.PRIVATE_SSH_KEY }}
+  ENV: ${{ inputs.environment }}
+  AWS_DEFAULT_REGION: ${{ inputs.region }}
+  GITHUB_OAUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  # AWS_IAM_ASSUME_ROLE: "arn:aws:iam::350828950339:role/gwt-acuity-infra-oidc-role"
+
+jobs:
+  dev:
+    name: ' ${{ inputs.environment }}-environment-triggered-with-${{ inputs.region }}-terraform-${{ inputs.deploy }}'
+    uses: ./.github/workflows/stack-workflow.yml
+    with: 
+      region: ${{ inputs.region }}
+      environment: 'dev'
+      deploy: ${{ inputs.deploy == 'apply' }}    #${{ github.ref == 'main' && inputs.deploy == 'apply' }}
+      aws_iam_assume_role: "arn:aws:iam::350828950339:role/gwt-acuity-infra-oidc-role"
+    secrets: inherit
+
+    
+   

@@ -1,0 +1,14 @@
+name: Sync issue to Azure DevOps work item
+
+on:
+  issues:
+    types:
+      [opened, edited, deleted, closed, reopened, labeled, unlabeled, assigned]
+  issue_comment:
+    types: [created, edited, deleted]
+
+jobs:
+  ado_sync:
+    name: Sync Github issues with Azure Boards
+    uses: mygainwell/acuity-github-assets/.github/workflows/sync-azure-boards.yml@main
+    secrets: inherit  

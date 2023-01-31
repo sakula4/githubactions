@@ -1,0 +1,37 @@
+name: Deploy Tableau Server 
+
+on: 
+  workflow_dispatch:
+    inputs:
+      region:
+        type: choice
+        description: Select region
+        options:
+        - us-east-1
+        - us-west-1
+      environment:
+        type: environment
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_DEFAULT_REGION: ${{ inputs.region }}
+  AWS_IAM_ASSUME_ROLE: "arn:aws:iam::350828950339:role/gwt-acuity-infra-oidc-role"
+  # AWS_IAM_EXEC_ROLE: "arn:aws:iam::918623739618:role/gwt-acuity-infra-execution-role"
+  ENV: ${{ fromJson('{ Development:"dev", Ephermal:"ephem", Production:"prod", Staging:"stage", Demo:"demo" }')[inputs.environment] }}
+
+jobs:
+  tableau-server:
+    name: 'deploy-tableau-server-stack'
+    uses: ./.github/workflows/common-workflow.yml
+    with:
+      region: ${{ inputs.region }}
+      layers: '["tableau_server"]'
+      deploy: false
+      aws_iam_assume_role: "arn:aws:iam::350828950339:role/gwt-acuity-infra-oidc-role"
+      env: ${{ fromJson('{ Development:"dev", Ephermal:"ephem", Production:"prod", Staging:"stage", Demo:"demo" }')[inputs.environment] }}
+      aws_secrets_key_ref: "OKTA"
+      aws_secrets_key_id: "github/workflows/okta/dev"
+    secrets: inherit

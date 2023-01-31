@@ -1,0 +1,44 @@
+name: Acuity Platform Stage environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+      region:
+        type: choice
+        description: Select region
+        options:
+        - us-east-1
+        - us-west-1
+      deploy:
+        type: choice
+        description: 'Terragrunt plan and(or) apply'
+        default: 'plan'
+        options:
+        - plan
+        - apply
+
+
+permissions:
+  contents: read
+  id-token: write
+
+
+env:
+  ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+  ENV: ${{ inputs.environment }}
+  AWS_DEFAULT_REGION: ${{ inputs.region }}
+  GITHUB_OAUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+
+jobs:
+  stage:
+    name: 'deploy-stage-environment'
+    uses: ./.github/workflows/stack-workflow.yml
+    with: 
+      region: ${{ inputs.region }}
+      environment: 'stage'
+      deploy: ${{ inputs.deploy == 'apply' }} 
+      aws_iam_assume_role: "arn:aws:iam::350828950339:role/gwt-acuity-infra-oidc-role"
+    secrets: inherit
