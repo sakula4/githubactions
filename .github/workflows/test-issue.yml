@@ -1,5 +1,8 @@
 # .github/workflows/issue-on-push.yml
-# on: [push]
+on: 
+  push:
+    branches:
+      - dev
 name: Create an issue on push
 permissions:
   contents: read
