@@ -1,7 +1,9 @@
 name: Test outputs
+
 on:
   push:
-    - main
+    branches:
+      - main
   
 jobs:
   job1:
