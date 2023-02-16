@@ -1,6 +1,7 @@
 name: Test outputs
 on:
-  workflow_dispatch
+  push:
+    - main
   
 jobs:
   job1:
