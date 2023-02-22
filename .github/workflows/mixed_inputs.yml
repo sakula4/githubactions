@@ -63,4 +63,7 @@ jobs:
           ```
         labels: release
         
+    - name: output issue id
+      run: |
+        echo ${{ create-issue.number }}
         
