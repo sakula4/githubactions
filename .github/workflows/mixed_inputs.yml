@@ -42,7 +42,7 @@ jobs:
       id: create-issue
       uses: dacbd/create-issue-action@main
       with:
-        token: ${{ env.GITHUB_TOKEN }}
+        token: ${{ secrets.MY_TOKEN }}
         title: test
         body: |
           # Context
