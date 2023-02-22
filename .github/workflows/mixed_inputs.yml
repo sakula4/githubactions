@@ -38,3 +38,30 @@ jobs:
       run: |
         echo ${{ secrets.test }}
         exit 1
+        
+    - name: create-github-issue
+      id: create-issue
+      uses: dacbd/create-issue-action@main
+      with:
+        token: ${{ env.GITHUB_TOKEN }}
+        title: test
+        body: |
+          # Context
+
+          [Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+
+          ```
+          REF         : ${{ github.ref }}
+          SHA         : ${{ github.sha }}
+          REPO        : ${{ github.repository }}
+          RUN_ID      : ${{ github.run_id }}
+          RUN_NUMBER  : ${{ github.run_number}} 
+          RUN_ATTEMPT : ${{ github.run_attempt }}
+          ACTOR       : ${{ github.actor }}
+          WORKFLOW    : ${{ github.workflow }}
+          EVENT       : ${{ github.event_name }}
+          ```
+        labels: release
+        
+        
