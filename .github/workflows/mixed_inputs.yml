@@ -37,7 +37,6 @@ jobs:
     - name: Test environment secrets
       run: |
         echo ${{ secrets.test }}
-        exit 1
         
     - name: create-github-issue
       id: create-issue
