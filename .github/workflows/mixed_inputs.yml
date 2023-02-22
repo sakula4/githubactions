@@ -65,5 +65,5 @@ jobs:
         
     - name: output issue id
       run: |
-        echo ${{ steps.create-issue.number }}
+        echo ${{ steps.create-issue.outputs }}
         
