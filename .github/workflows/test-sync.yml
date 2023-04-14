@@ -5,6 +5,7 @@ on:
 jobs:
   my_job:
     runs-on: ubuntu-latest
-    if: "contains(github.event.issue.labels.*.name, 'task') || contains(github.event.issue.labels.*.name, 'bug') || contains(github.event.issue.labels.*.name, 'feature') || contains(github.event.issue.labels.*.name, 'enhancement')"    steps:
+    if: "contains(github.event.issue.labels.*.name, 'task') || contains(github.event.issue.labels.*.name, 'bug') || contains(github.event.issue.labels.*.name, 'feature') || contains(github.event.issue.labels.*.name, 'enhancement')"    
+    steps:
       - name: My Step
         run: echo "This step will only run if the issue has one of the labels 'task', 'bug', 'feature', or 'enhancement'."
