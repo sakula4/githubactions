@@ -1,0 +1,11 @@
+name: Sample Sync workflow
+on:
+  issues:
+    types: [opened, edited]
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+    if: "github.event.issue.labels.*.name in ['task', 'bug', 'feature', 'enhancement']"
+    steps:
+      - name: My Step
+        run: echo "This step will only run if the issue has one of the labels 'task', 'bug', 'feature', or 'enhancement'."
