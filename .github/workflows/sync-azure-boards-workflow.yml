@@ -9,6 +9,7 @@ on:
 
 jobs:
   ado_sync:
+    if: "github.event.issue.labels.*.name in ['task', 'bug', 'feature', 'enhancement']"
     name: Sync Github issues with Azure Boards
     uses: mygainwell/acuity-github-assets/.github/workflows/sync-azure-boards.yml@main
     secrets: inherit  
