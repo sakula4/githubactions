@@ -1,0 +1,10 @@
+name: Issue created-Print Payload
+on:
+  issues:
+    types: [opened]
+jobs:
+  print-payload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print issue payload
+        run: echo '${{ toJson(github.event.issue) }}'
