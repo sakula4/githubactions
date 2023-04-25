@@ -6,3 +6,6 @@ jobs:
   test-jobs:
     name: Test matrix invocation from here
     uses: ./.github/workflows/test-jobs.yml
+    strategy:
+      matrix:
+       input: [1,2]
