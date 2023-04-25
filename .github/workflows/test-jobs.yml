@@ -24,7 +24,7 @@ jobs:
         shell: bash 
         
       - name: TF config for us-west-2 and dr
-        if: ${{ inputs.dr_enabled == 'true' && inputs.region == 'us-west-2' }}
+        if: ${{ inputs.dr_enabled && inputs.region == 'us-west-2' }}
         run: |
           echo "TF_BACKEND_CONFIG=key=gw360/ephemrical/infra/ephem/api/us-west-2/terraform.tfstate" >> $GITHUB_ENV
           echo "TF_CLI_ARGS=-target=module.api.module.ecs_service" >> $GITHUB_ENV
