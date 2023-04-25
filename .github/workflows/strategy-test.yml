@@ -1,4 +1,4 @@
-Name: test workflow strategy
+name: test workflow strategy
 on: 
   workflow_dispatch
 
