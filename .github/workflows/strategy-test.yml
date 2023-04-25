@@ -6,6 +6,9 @@ jobs:
   test-jobs:
     name: Test matrix invocation from here
     uses: ./.github/workflows/test-jobs.yml
+    with:
+      dr_enabled: true
+      region: us-west-2
     strategy:
       matrix:
        input: [1,2]
