@@ -1,4 +1,4 @@
-name: My Workflow
+name: Test-jobs-strategy-call-workflow
 on: 
   workflow_call:
     inputs:
@@ -17,6 +17,12 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     steps:
+      - name: print inputs
+        run: |
+          echo ${{ inputs.dr_enabled }}
+          echo ${{ inputs.region }}
+        shell: bash 
+        
       - name: TF config for us-west-2 and dr
         if: ${{ inputs.dr_enabled == 'true' && inputs.region == 'us-west-2' }}
         run: |
