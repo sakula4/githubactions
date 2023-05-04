@@ -1,12 +1,23 @@
 name: Test outputs
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
-  
+  workflow_dispatch:
+    inputs:
+      environment: 
+        type: string
+        default: ephem
+
+    
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  ENV_LONG: >
+    ${{ fromJson('{"dev": "development",
+    "stage": "staging",
+    "ephem": "ephemrical",
+    "demo": "demo",
+    "prod": "production"}')[inputs.environment] }}
+
+
 jobs:
   job1:
     runs-on: ubuntu-latest
@@ -17,7 +28,9 @@ jobs:
       output2: ${{ steps.step2.outputs.test }}
     steps:
     - id: step1
-      run: echo "test=hello" >> $GITHUB_OUTPUT
+      run: |
+        echo "${{ env.ENV_LONG }}/Hello" >> $GITHUB_ENV
+        echo "test=hello" >> $GITHUB_OUTPUT
     - id: step2
       run: echo "test=world" >> $GITHUB_OUTPUT
     - name: Test Outputs
