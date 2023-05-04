@@ -10,7 +10,7 @@ on:
     
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  ENV_LONG: >
+  ENV_LONG: >-
     ${{fromJson('{"dev": "development","stage": "staging","ephem": "ephemrical","demo": "demo","prod": "production"}')[inputs.environment]}}
 
 
