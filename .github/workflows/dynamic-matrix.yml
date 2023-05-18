@@ -2,26 +2,16 @@ name: Dynamic Matrix Example
 
 on:
   workflow_dispatch:
-    inputs:
-      primary:
-        description: 'Primary Region'
-        required: true
-        default: 'us-east-1'
-      secondary:
-        description: 'Secondary Regions'
-        required: true
-        default: 'us-west-2,us-central-1'
-        
+
 env:
-  primary: "us-east-1"
-  secondary: "us-west-2,us-central-1"
+  PRIMARY_REGION: us-east-1
+  SECONDARY_REGIONS: us-west-2,us-central-1
 
 jobs:
   build:
     strategy:
       matrix:
-        test: ${{ fromJson(env.primary + ',' + env.secondary) }}
-
+        test: ['${{ env.PRIMARY_REGION }}','${{ env.SECONDARY_REGIONS }}']
     runs-on: ubuntu-latest
 
     steps:
