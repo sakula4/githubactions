@@ -11,7 +11,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      regions: ${{ toJSON(steps.set_env.outputs.regions) }}
+      regions: ${{ steps.set_env.outputs.regions }}
     steps:
       - name: Set Environment Variable
         id: set_env
