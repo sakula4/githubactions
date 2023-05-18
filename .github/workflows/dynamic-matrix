@@ -1,0 +1,37 @@
+name: Dynamic Matrix Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: 'Operating System'
+        required: true
+        default: 'ubuntu'
+        options: ['ubuntu', 'linux', 'rhel']
+      node_version:
+        description: 'Node.js Version'
+        required: true
+        default: '12'
+
+jobs:
+  build:
+    runs-on: ${{ github.event.inputs.os }}
+    strategy:
+      matrix:
+        node_version: ${{ github.event.inputs.node_version }}
+        os:
+          - ${{ github.event.inputs.os }}
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: check inputs
+        run: |
+          echo ${{ matrix.node_version }} 
+          echo ${{ matrix.os }}
