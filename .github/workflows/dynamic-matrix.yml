@@ -16,7 +16,8 @@ jobs:
       - name: Set Environment Variable
         id: set_env
         run: |
-          echo "regions=${{toJSON(env.PRIMARY_REGION,env.SECONDARY_REGIONS)}}" >> $GITHUB_OUTPUT
+          echo "regions=[${{env.PRIMARY_REGION}},${{env.SECONDARY_REGIONS}}]" 
+          echo "regions=${{toJSON($regions)}}">> $GITHUB_OUTPUT
           
       - name: test-outputs
         run: |
