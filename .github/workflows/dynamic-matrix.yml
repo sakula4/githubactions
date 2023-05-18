@@ -3,42 +3,31 @@ name: Dynamic Matrix Example
 on:
   workflow_dispatch:
     inputs:
-      os:
-        description: 'Operating System'
+      primary:
+        description: 'Primary Region'
         required: true
-        default: 'ubuntu'
-        options: 
-          - name: 'Ubuntu'
-            value: 'ubuntu'
-          - name: 'Linux'
-            value: 'linux'
-          - name: 'RHEL'
-            value: 'rhel'
-      node_version:
-        description: 'Node.js Version'
+        default: 'us-east-1'
+      secondary:
+        description: 'Secondary Regions'
         required: true
-        default: '12'
+        default: 'us-west-2,us-central-1'
+        
+env:
+  primary: "us-east-1"
+  secondary: "us-west-2,us-central-1"
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: [${{ github.event.inputs.node_version }}]
-        os: ${{ fromJson(github.event.inputs.os) }}
+        environment: ${{ fromJson(env.primary + ',' + env.secondary) }}
+
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node_version }}
-
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Rest of the steps...
+      - name: Print Environment
+        run: echo "Environment: ${{ matrix.environment }}"
 
-      - name: check inputs
-        run: |
-          echo ${{ matrix.node_version }} 
-          echo ${{ matrix.os }}
