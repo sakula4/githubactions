@@ -17,7 +17,7 @@ jobs:
         id: set_env
         run: |
           echo "regions=[${{env.PRIMARY_REGION}},${{env.SECONDARY_REGIONS}}]" 
-          echo "regions=${{toJSON($regions)}}">> $GITHUB_OUTPUT
+          echo "regions=${{toJSON(regions)}}">> $GITHUB_OUTPUT
           
       - name: test-outputs
         run: |
