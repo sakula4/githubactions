@@ -8,10 +8,20 @@ env:
   SECONDARY_REGIONS: us-west-2,us-central-1
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      regions: ${{ set_env.outputs.regions }}
+    steps:
+      - name: Set Environment Variable
+        id: set_env
+        run: |
+          echo "regions=[${{ env.PRIMARY_REGIONS }} + ${{ env.SECONDARY_REGIONS }} ]
+
   build:
     strategy:
       matrix:
-        test: ${{ fromJSON(env.PRIMARY_REGION,env.SECONDARY_REGIONS) }}
+        test: ${{ fromJSON(needs.setup.outputs.regions) }}
     runs-on: ubuntu-latest
 
     steps:
