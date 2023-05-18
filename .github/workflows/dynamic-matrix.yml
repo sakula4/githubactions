@@ -7,6 +7,7 @@ on:
         description: 'Operating System'
         required: true
         default: 'ubuntu'
+        type: choice
         options: ['ubuntu', 'linux', 'rhel']
       node_version:
         description: 'Node.js Version'
