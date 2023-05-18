@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  PRIMARY_REGION: us-east-1
-  SECONDARY_REGIONS: us-west-2,us-central-1
+  PRIMARY_REGION: "us-east-1"
+  SECONDARY_REGIONS: "us-west-2,us-central-1"
 
 jobs:
   setup:
@@ -24,7 +24,8 @@ jobs:
 
   build:
     strategy:
-      matrix: ${{ fromJSON(needs.setup.outputs.regions) }}
+      matrix: 
+        regions: ${{ fromJSON(env.PRIMARY_REGION,env.SECONDARY_REGIONS) }}
     runs-on: ubuntu-latest
     needs: setup
     steps:
