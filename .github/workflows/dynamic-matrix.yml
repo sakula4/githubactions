@@ -11,13 +11,12 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      regions: ${{ steps.set_env.outputs.regions }}
+      regions: ${{ toJSON(steps.set_env.outputs.regions) }}
     steps:
       - name: Set Environment Variable
         id: set_env
         run: |
-          echo "region=[${{env.PRIMARY_REGION}},${{env.SECONDARY_REGIONS}}]" 
-          echo "regions=toJSON($region)">> $GITHUB_OUTPUT
+          echo "regions=[${{env.PRIMARY_REGION}},${{env.SECONDARY_REGIONS}}]" >> $GITHUB_OUTPUT
           
       - name: test-outputs
         run: |
