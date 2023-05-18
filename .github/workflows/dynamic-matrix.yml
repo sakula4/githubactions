@@ -25,7 +25,7 @@ jobs:
   build:
     strategy:
       matrix:
-        test: ${{ fromJSON(needs.setup.outputs.regions) }}
+        test: ${{ needs.setup.outputs.regions }}
     runs-on: ubuntu-latest
 
     steps:
