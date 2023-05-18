@@ -16,7 +16,7 @@ jobs:
       - name: Set Environment Variable
         id: set_env
         run: |
-          echo "regions=[${{ env.PRIMARY_REGIONS }} + ${{ env.SECONDARY_REGIONS }} ]
+          echo "regions=[${{ env.PRIMARY_REGIONS }} + ${{ env.SECONDARY_REGIONS }} ]" >> $GITHUB_OUTPUT
 
   build:
     strategy:
