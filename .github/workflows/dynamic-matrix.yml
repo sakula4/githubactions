@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  PRIMARY_REGION: "us-east-1"
-  SECONDARY_REGIONS: "us-west-2,us-central-1"
+  PRIMARY_REGION: us-east-1
+  SECONDARY_REGIONS: us-west-2,us-central-1
 
 jobs:
   setup:
