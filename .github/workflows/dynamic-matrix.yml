@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       matrix:
-        test: ['${{ env.PRIMARY_REGION }}','${{ env.SECONDARY_REGIONS }}']
+        test: ${{ fromJSON(env.PRIMARY_REGION,env.SECONDARY_REGIONS) }}
     runs-on: ubuntu-latest
 
     steps:
