@@ -23,9 +23,9 @@ jobs:
           echo ${{ steps.set_env.outputs.regions }}
 
   build:
-    strategy:
-      matrix:
-        test: ${{ needs.setup.outputs.regions }}
+#     strategy:
+#       matrix:
+#         test: ${{ needs.setup.outputs.regions }}
     runs-on: ubuntu-latest
 
     steps:
@@ -34,6 +34,6 @@ jobs:
 
       - name: Print Environment
         run: |
-          echo "Environment: ${{ matrix.test }}"
+          echo "Environment: ${{ needs.setup.outputs.regions }}"
         shell: bash
 
