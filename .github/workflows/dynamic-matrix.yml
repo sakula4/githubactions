@@ -7,8 +7,13 @@ on:
         description: 'Operating System'
         required: true
         default: 'ubuntu'
-        type: choice
-        options: ['ubuntu', 'linux', 'rhel']
+        options: 
+          - name: 'Ubuntu'
+            value: 'ubuntu'
+          - name: 'Linux'
+            value: 'linux'
+          - name: 'RHEL'
+            value: 'rhel'
       node_version:
         description: 'Node.js Version'
         required: true
@@ -16,12 +21,11 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ github.event.inputs.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: ${{ github.event.inputs.node_version }}
-        os:
-          - ${{ github.event.inputs.os }}
+        node_version: [${{ github.event.inputs.node_version }}]
+        os: ${{ fromJson(github.event.inputs.os) }}
 
     steps:
       - name: Set up Node.js
@@ -31,6 +35,8 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
+
+      # Rest of the steps...
 
       - name: check inputs
         run: |
