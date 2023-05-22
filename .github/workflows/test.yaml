@@ -1,15 +1,9 @@
 name: ContinuousIntegration
 
 on:
-  # push:
-  #   branches:
-  #     - "main"
-  workflow_dispatch:
-
-env:
-  AWS_DEFAULT_REGION: us-east-1
-  AWS_IAM_ASSUME_ROLE: arn:aws:iam::076699035263:role/test-github-ecs
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  pull_request:
+    branches:
+      - "main"
 
 permissions:
   id-token: write
@@ -17,44 +11,12 @@ permissions:
   pull-requests: write
 
 jobs:
-  check-ecs-service:
-    name: check-ecs-service
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: configure-aws-credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
-          role-to-assume: ${{ env.AWS_IAM_ASSUME_ROLE }}
-          role-duration-seconds: 1200
-          role-session-name: gh-action
-
-      # - name: get s3
-      #   run: |
-      #     aws sts get-caller-identity
-      #     echo "AWS_SDK_LOAD_CONFIG=\"true\"" >> GITHUB_ENV
-      #   shell: bash
-      # - name: get-ssh-private-key
-      #   uses: abhilash1in/aws-secrets-manager-action@v2.1.0
-      #   with:
-      #     secrets: github/workflows/sshprivatekey
-      #     disable-warnings: true
-
-      # - name: Install SSH Key
-      #   uses: shimataro/ssh-key-action@v2
-      #   with:
-      #     key: ${{ env.GITHUB_WORKFLOWS_SSHPRIVATEKEY }}
-      #     known_hosts: github.com          
-
-      - name: check ecs service health
-        uses: mygainwell/acuity-github-assets/.github/actions/ecs-wait-action@bg-actions
-        with:
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
-          ecs-cluster: "gwt-acuity-gw360-apie-ecs"
-          ecs-services: '["canary-service-dev", "main-service-dev"]'
-          role-to-assume: 'arn:aws:iam::076699035263:role/test-ecs-role'
-          retries: 3
-          verbose: true          
+  test-folder:
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout
+          uses: actions/checkout@v3
+        
+        - name: print context
+          run: |
+            echo ${{ github.event_name }}
