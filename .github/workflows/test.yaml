@@ -13,6 +13,8 @@ permissions:
 jobs:
   test-folder:
       runs-on: ubuntu-latest
+      outputs:
+        changed_files: ${{ github.changed-files.outputs.all_changed_files }}
       steps:
         - name: checkout
           uses: actions/checkout@v3
@@ -23,4 +25,12 @@ jobs:
           
         - name: print outputs
           run: |
-            echo ${{ toJson(steps.changed-files.outputs) }}
+            echo ${{ toJson(steps.changed-files.outputs.all_changed_files) }}
+            
+            
+  new-job:
+    runs-on: ubuntu-latest
+    needs: test-folder
+    steps:
+      - run: |
+          echo ${{ needs.test-folder.outputs.changed_files }}
