@@ -19,4 +19,4 @@ jobs:
         
         - name: print context
           run: |
-            echo ${{ github.event_name }}
+            echo ${{ github.event }}
