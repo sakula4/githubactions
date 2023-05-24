@@ -1,0 +1,45 @@
+name: DeployPlatform
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+  issues: write
+
+
+jobs:
+  create-github-issue:
+    name: CreateIssue
+    runs-on: ubuntu-latest
+    outputs: 
+      issue_number: ${{ steps.create-github-issue.outputs.number }}
+    steps:
+      - name: create-github-issue
+        id: create-github-issue
+        uses: dacbd/create-issue-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'deploy-plan-stage'
+          body: |
+            # Context
+
+            [Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+            ```
+            REF         : ${{ github.ref }}
+            SHA         : ${{ github.sha }}
+            REPO        : ${{ github.repository }}
+            RUN_ID      : ${{ github.run_id }}
+            RUN_NUMBER  : ${{ github.run_number}} 
+            RUN_ATTEMPT : ${{ github.run_attempt }}
+            ACTOR       : ${{ github.actor }}
+            WORKFLOW    : ${{ github.workflow }}
+            EVENT       : ${{ github.event_name }}
+            ```
+          labels: release
+      - name: newstep
+        run: |
+          echo ${{ steps.create-github-issue.outputs.number }}
+          
