@@ -48,6 +48,6 @@ jobs:
     needs: [create-github-issue]
     uses: ./.github/workflows/test-trigger.yml
     with:
-      issue_number: ${{ needs.create-github-issue.outputs.issue_number }}
+      issue_number: '${{ needs.create-github-issue.outputs.issue_number }}'
     
           
