@@ -5,7 +5,7 @@ on:
     inputs:
       issue_number:
         description: Github Issue/PR Number
-        type: number
+        type: string
         default: 0
         
 jobs:
