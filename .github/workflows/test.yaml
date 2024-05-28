@@ -13,10 +13,24 @@ permissions:
 jobs:
   test-folder:
       runs-on: ubuntu-latest
+      outputs:
+        changed_files: ${{ github.changed-files.outputs.all_changed_files }}
       steps:
         - name: checkout
           uses: actions/checkout@v3
         
-        - name: print context
+        - name: Get changed files
+          id: changed-files
+          uses: tj-actions/changed-files@v35
+          
+        - name: print outputs
           run: |
-            echo ${{ github.event_name }}
+            echo ${{ toJson(steps.changed-files.outputs.all_changed_files) }}
+            
+            
+  new-job:
+    runs-on: ubuntu-latest
+    needs: test-folder
+    steps:
+      - run: |
+          echo ${{ needs.test-folder.outputs.changed_files }}
