@@ -44,5 +44,6 @@ resource "random_pet" "name" {
 }
 
 output "s3_bucket"{
-value = aws_s3_bucket.demo_bucket
+  description = "The demo S3 bucket resource"
+  value = aws_s3_bucket.demo_bucket
 }
