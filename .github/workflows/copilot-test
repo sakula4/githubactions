@@ -1,0 +1,38 @@
+name: Terraform Plan
+
+on:
+  pull_request:
+    paths:
+      - 'sample-tf/**/*.tf'
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        working-directory: sample-tf
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: sample-tf
+        run: terraform plan -out=tfplan.txt
+
+      - name: Show Terraform Plan (to text)
+        working-directory: sample-tf
+        run: terraform show -no-color tfplan.txt > plan-output.txt
+
+      - name: Upload plan-output.txt as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan-output
+          path: sample-tf/plan-output.txt
